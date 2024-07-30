@@ -12,4 +12,9 @@ data/displays/tables/*
 data/single_chains
 data/inputs/maps/*
 data/inputs/templates/*
-data/built_models/*
+data/built_models/PDB
+data/built_models/alphafold
+data/built_models/Phenix
+data/built_models/MAINMAST
+data/built_models/DeepTracer
+data/built_models/ModelAngelo
