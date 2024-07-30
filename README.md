@@ -21,7 +21,7 @@ For EModelX(+AF):
 , and `--output_dir`: the output directory for modeling results  
 Notice: If you want to run EModelX(+AF), please place your AlphaFold-predicted single-chain structures in your `--template_dir`， the format should follow our example in ./inputs/templates.  
 
-## Postprocess for all-atom construction and refinement
+## Postprocess
 ### Environment
 Install phenix following <https://phenix-online.org/> into a directory, e.g. `modules/phenix-1.20.1-4487`  
 
