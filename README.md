@@ -7,7 +7,7 @@ EModelX is a method for automatic cryo-EM protein complex structure modeling.
 For EModelX(+AF), you may need to run AlphaFold following <https://github.com/deepmind/alphafold> or get AlphaFold-predicted single-chain structures from AlphaFoldDB (<https://alphafold.ebi.ac.uk/>).  
 
 ## Download NN model weights
-Download NN model weights from <https://drive.google.com/file/d/13BKzEBfL0uubYgcJJTGSZ-PkO9hXAB9X/view?usp=drive_link> and build directory `./models`.  
+Download NN model weights from <https://drive.google.com/file/d/13BKzEBfL0uubYgcJJTGSZ-PkO9hXAB9X/view?usp=drive_link> and place them in `./models`.  
 
 ## Minimal Example: Main Chain Modeling for new EM maps
 
