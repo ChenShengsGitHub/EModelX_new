@@ -1,0 +1,2080 @@
+data_manager {
+  restraint_files = None
+  default_restraint = None
+  phil_files = "/home/chens/projects/EModelX_new/data/inputs/phenix.eff"
+  default_phil = "/home/chens/projects/EModelX_new/data/inputs/phenix.eff"
+  real_map_files = "/home/chens/projects/EModelX_new/data/inputs/maps/emd_32336.map.gz"
+  default_real_map = "/home/chens/projects/EModelX_new/data/inputs/maps/emd_32336.map.gz"
+  map_coefficients {
+    file = None
+    labels {
+      name = None
+      type = *x_ray neutron electron
+    }
+  }
+  default_map_coefficients = None
+  miller_array {
+    file = None
+    labels {
+      name = None
+      type = *x_ray neutron electron
+    }
+  }
+  default_miller_array = None
+  model {
+    file = "/home/chens/projects/EModelX_new/data/outputs/7w72_EModelX_all_atom_model.pdb"
+    type = *x_ray neutron electron
+  }
+  default_model = "/home/chens/projects/EModelX_new/data/outputs/7w72_EModelX_all_atom_model.pdb"
+}
+debug = False
+map_coefficients_label = None
+resolution = 3.1
+rotamers {
+  fit = all *outliers_or_poormap outliers_and_poormap outliers poormap
+  restraints {
+    enabled = True
+    sigma = Auto
+    target = max_distant min_distant exact_match fix_outliers
+  }
+  tuneup = outliers outliers_and_poormap
+}
+write_initial_geo_file = False
+write_final_geo_file = False
+write_all_states = False
+write_pkl_stats = False
+model_format = *pdb *mmcif
+mask_and_he_map = False
+resolution_factor = 0.25
+ncs_constraints = Auto
+refine_ncs_operators = Auto
+variable_rama_potential = False
+weight = None
+real_space_target_exclude_selection = "element H or element D"
+show_statistics = True
+show_per_residue = True
+dry_run = False
+random_seed = 0
+nproc = 8
+gradients_method = fd linear quadratic *tricubic
+scattering_table = n_gaussian wk1995 it1992 *electron neutron
+ignore_symmetry_conflicts = False
+wrapping = False
+skip_map_model_overlap_check = False
+absolute_length_tolerance = 0.01
+absolute_angle_tolerance = 0.01
+refinement {
+  run = *minimization_global rigid_body *local_grid_search morphing \
+        simulated_annealing *adp *occupancy *nqh_flips
+  adp_individual_isotropic = True
+  adp_individual_isotropic_restraints_weight = 1
+  morphing = every_macro_cycle once *first
+  simulated_annealing = every_macro_cycle *once
+  local_grid_search = every_macro_cycle once *last
+  max_iterations = 100
+  macro_cycles = 5
+  target_bonds_rmsd = 0.01
+  target_angles_rmsd = 1
+  backbone_sample = None
+  use_adp_restraints = True
+  atom_radius = 3
+  do_ss_ideal = False
+  do_ccd = False
+  rigid_body {
+    group = None
+  }
+}
+amber {
+  use_amber = False
+  topology_file_name = None
+  coordinate_file_name = None
+  order_file_name = None
+  wxc_factor = 1
+  restraint_wt = 0
+  restraintmask = ""
+  reference_file_name = ""
+  bellymask = ""
+  qmmask = ""
+  qmcharge = 0
+  netcdf_trajectory_file_name = ""
+  print_amber_energies = False
+}
+reference_model {
+  enabled = False
+  file = None
+  use_starting_model_as_reference = False
+  sigma = 1
+  limit = 15
+  hydrogens = False
+  main_chain = True
+  side_chain = True
+  fix_outliers = True
+  strict_rotamer_matching = False
+  auto_shutoff_for_ncs = False
+  secondary_structure_only = False
+  reference_group {
+    reference = None
+    selection = None
+    file_name = None
+  }
+  search_options {
+    exclude_selection = element H or element D or water
+    chain_similarity_threshold = 0.85
+    chain_max_rmsd = 100
+    residue_match_radius = 1000
+    try_shortcuts = False
+    minimum_number_of_atoms_in_copy = 3
+    validate_user_supplied_groups = True
+  }
+}
+pdb_interpretation {
+  restraints_library {
+    cdl = True
+    mcl = True
+    cis_pro_eh99 = True
+    omega_cdl = False
+    cdl_nucleotides = False
+    cdl_nucleotides_esd = *phenix csd
+    cdl_svl = False
+    rdl = False
+    rdl_selection = *all TRP
+    hpdl = False
+  }
+  sort_atoms = True
+  flip_symmetric_amino_acids = True
+  superpose_ideal_ligand = *None all SF4 F3S DVT
+  disable_uc_volume_vs_n_atoms_check = False
+  allow_polymer_cross_special_position = False
+  correct_hydrogens = True
+  secondary_structure {
+    protein {
+      enabled = True
+      search_method = *ksdssp mmtbx_dssp from_ca cablam
+      distance_ideal_n_o = 2.9
+      distance_cut_n_o = 3.5
+      remove_outliers = True
+      restrain_hbond_angles = True
+      helix {
+        serial_number = "1"
+        helix_identifier = "1"
+        enabled = True
+        selection = chain 'A' and resid 13 through 40
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "2"
+        helix_identifier = "2"
+        enabled = True
+        selection = chain 'A' and resid 53 through 56
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "3"
+        helix_identifier = "3"
+        enabled = True
+        selection = chain 'A' and resid 67 through 83
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "4"
+        helix_identifier = "4"
+        enabled = True
+        selection = chain 'A' and resid 89 through 98
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "5"
+        helix_identifier = "5"
+        enabled = True
+        selection = chain 'A' and resid 157 through 171
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "6"
+        helix_identifier = "6"
+        enabled = True
+        selection = chain 'A' and resid 191 through 200
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "7"
+        helix_identifier = "7"
+        enabled = True
+        selection = chain 'A' and resid 242 through 244
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "8"
+        helix_identifier = "8"
+        enabled = True
+        selection = chain 'A' and resid 249 through 261
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "9"
+        helix_identifier = "9"
+        enabled = True
+        selection = chain 'A' and resid 281 through 298
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "10"
+        helix_identifier = "10"
+        enabled = True
+        selection = chain 'A' and resid 308 through 312
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "11"
+        helix_identifier = "11"
+        enabled = True
+        selection = chain 'A' and resid 332 through 347
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "12"
+        helix_identifier = "12"
+        enabled = True
+        selection = chain 'A' and resid 371 through 396
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "13"
+        helix_identifier = "13"
+        enabled = True
+        selection = chain 'A' and resid 422 through 424
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "14"
+        helix_identifier = "14"
+        enabled = True
+        selection = chain 'A' and resid 426 through 447
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "15"
+        helix_identifier = "15"
+        enabled = True
+        selection = chain 'A' and resid 451 through 454
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "16"
+        helix_identifier = "16"
+        enabled = True
+        selection = chain 'A' and resid 460 through 477
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "17"
+        helix_identifier = "17"
+        enabled = True
+        selection = chain 'A' and resid 495 through 516
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "18"
+        helix_identifier = "18"
+        enabled = True
+        selection = chain 'A' and resid 518 through 532
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "19"
+        helix_identifier = "19"
+        enabled = True
+        selection = chain 'A' and resid 541 through 550
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "20"
+        helix_identifier = "20"
+        enabled = True
+        selection = chain 'A' and resid 553 through 567
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "21"
+        helix_identifier = "21"
+        enabled = True
+        selection = chain 'A' and resid 575 through 595
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "22"
+        helix_identifier = "22"
+        enabled = True
+        selection = chain 'A' and resid 598 through 604
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "23"
+        helix_identifier = "23"
+        enabled = True
+        selection = chain 'A' and resid 607 through 617
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "24"
+        helix_identifier = "24"
+        enabled = True
+        selection = chain 'K' and resid 56 through 74
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "25"
+        helix_identifier = "25"
+        enabled = True
+        selection = chain 'K' and resid 123 through 125
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "26"
+        helix_identifier = "26"
+        enabled = True
+        selection = chain 'K' and resid 128 through 136
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "27"
+        helix_identifier = "27"
+        enabled = True
+        selection = chain 'K' and resid 180 through 193
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "28"
+        helix_identifier = "28"
+        enabled = True
+        selection = chain 'K' and resid 211 through 213
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "29"
+        helix_identifier = "29"
+        enabled = True
+        selection = chain 'K' and resid 248 through 258
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "30"
+        helix_identifier = "30"
+        enabled = True
+        selection = chain 'K' and resid 268 through 272
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "31"
+        helix_identifier = "31"
+        enabled = True
+        selection = chain 'K' and resid 288 through 290
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "32"
+        helix_identifier = "32"
+        enabled = True
+        selection = chain 'K' and resid 300 through 304
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "33"
+        helix_identifier = "33"
+        enabled = True
+        selection = chain 'K' and resid 351 through 357
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "34"
+        helix_identifier = "34"
+        enabled = True
+        selection = chain 'K' and resid 368 through 384
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "35"
+        helix_identifier = "35"
+        enabled = True
+        selection = chain 'S' and resid 5 through 33
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "36"
+        helix_identifier = "36"
+        enabled = True
+        selection = chain 'S' and resid 42 through 49
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "37"
+        helix_identifier = "37"
+        enabled = True
+        selection = chain 'S' and resid 70 through 74
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "38"
+        helix_identifier = "38"
+        enabled = True
+        selection = chain 'S' and resid 107 through 114
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "39"
+        helix_identifier = "39"
+        enabled = True
+        selection = chain 'S' and resid 118 through 124
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "40"
+        helix_identifier = "40"
+        enabled = True
+        selection = chain 'S' and resid 172 through 187
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "41"
+        helix_identifier = "41"
+        enabled = True
+        selection = chain 'S' and resid 191 through 200
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "42"
+        helix_identifier = "42"
+        enabled = True
+        selection = chain 'S' and resid 210 through 213
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "43"
+        helix_identifier = "43"
+        enabled = True
+        selection = chain 'S' and resid 241 through 247
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "44"
+        helix_identifier = "44"
+        enabled = True
+        selection = chain 'S' and resid 249 through 259
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "45"
+        helix_identifier = "45"
+        enabled = True
+        selection = chain 'S' and resid 292 through 294
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "46"
+        helix_identifier = "46"
+        enabled = True
+        selection = chain 'S' and resid 300 through 306
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "47"
+        helix_identifier = "47"
+        enabled = True
+        selection = chain 'S' and resid 360 through 365
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "48"
+        helix_identifier = "48"
+        enabled = True
+        selection = chain 'S' and resid 376 through 390
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "49"
+        helix_identifier = "49"
+        enabled = True
+        selection = chain 'S' and resid 414 through 444
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "50"
+        helix_identifier = "50"
+        enabled = True
+        selection = chain 'S' and resid 453 through 475
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "51"
+        helix_identifier = "51"
+        enabled = True
+        selection = chain 'S' and resid 480 through 496
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "52"
+        helix_identifier = "52"
+        enabled = True
+        selection = chain 'S' and resid 512 through 517
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "53"
+        helix_identifier = "53"
+        enabled = True
+        selection = chain 'T' and resid 46 through 54
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "54"
+        helix_identifier = "54"
+        enabled = True
+        selection = chain 'T' and resid 98 through 113
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "55"
+        helix_identifier = "55"
+        enabled = True
+        selection = chain 'T' and resid 143 through 145
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "56"
+        helix_identifier = "56"
+        enabled = True
+        selection = chain 'T' and resid 158 through 167
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "57"
+        helix_identifier = "57"
+        enabled = True
+        selection = chain 'T' and resid 175 through 180
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "58"
+        helix_identifier = "58"
+        enabled = True
+        selection = chain 'T' and resid 182 through 186
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "59"
+        helix_identifier = "59"
+        enabled = True
+        selection = chain 'T' and resid 235 through 239
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "60"
+        helix_identifier = "60"
+        enabled = True
+        selection = chain 'T' and resid 500 through 523
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "61"
+        helix_identifier = "61"
+        enabled = True
+        selection = chain 'U' and resid 5 through 20
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "62"
+        helix_identifier = "62"
+        enabled = True
+        selection = chain 'U' and resid 24 through 30
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "63"
+        helix_identifier = "63"
+        enabled = True
+        selection = chain 'U' and resid 41 through 50
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "64"
+        helix_identifier = "64"
+        enabled = True
+        selection = chain 'U' and resid 67 through 115
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "65"
+        helix_identifier = "65"
+        enabled = True
+        selection = chain 'U' and resid 130 through 146
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "66"
+        helix_identifier = "66"
+        enabled = True
+        selection = chain 'U' and resid 149 through 155
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "67"
+        helix_identifier = "67"
+        enabled = True
+        selection = chain 'U' and resid 160 through 176
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "68"
+        helix_identifier = "68"
+        enabled = True
+        selection = chain 'U' and resid 179 through 192
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "69"
+        helix_identifier = "69"
+        enabled = True
+        selection = chain 'U' and resid 194 through 211
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "70"
+        helix_identifier = "70"
+        enabled = True
+        selection = chain 'U' and resid 220 through 247
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "71"
+        helix_identifier = "71"
+        enabled = True
+        selection = chain 'U' and resid 257 through 262
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "72"
+        helix_identifier = "72"
+        enabled = True
+        selection = chain 'U' and resid 275 through 279
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "73"
+        helix_identifier = "73"
+        enabled = True
+        selection = chain 'U' and resid 283 through 307
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "74"
+        helix_identifier = "74"
+        enabled = True
+        selection = chain 'U' and resid 312 through 326
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "75"
+        helix_identifier = "75"
+        enabled = True
+        selection = chain 'U' and resid 332 through 342
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "76"
+        helix_identifier = "76"
+        enabled = True
+        selection = chain 'U' and resid 345 through 351
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "77"
+        helix_identifier = "77"
+        enabled = True
+        selection = chain 'U' and resid 355 through 376
+        helix_type = alpha pi *3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      helix {
+        serial_number = "78"
+        helix_identifier = "78"
+        enabled = True
+        selection = chain 'U' and resid 384 through 417
+        helix_type = *alpha pi 3_10 unknown
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'A' and resid 179 through 182
+        sheet_id = "  A"
+        strand {
+          selection = chain 'A' and resid 142 through 147
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'A' and resid 144 and name N
+          bond_start_previous = chain 'A' and resid 179 and name O
+        }
+        strand {
+          selection = chain 'A' and resid 218 through 226
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'A' and resid 218 and name N
+          bond_start_previous = chain 'A' and resid 143 and name O
+        }
+        strand {
+          selection = chain 'A' and resid 318 through 322
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'A' and resid 319 and name N
+          bond_start_previous = chain 'A' and resid 224 and name O
+        }
+        strand {
+          selection = chain 'A' and resid 234 through 238
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'A' and resid 238 and name N
+          bond_start_previous = chain 'A' and resid 318 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'K' and resid 82 through 84
+        sheet_id = "  B"
+        strand {
+          selection = chain 'K' and resid 44 through 49
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'K' and resid 47 and name N
+          bond_start_previous = chain 'K' and resid 83 and name O
+        }
+        strand {
+          selection = chain 'K' and resid 155 through 161
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'K' and resid 156 and name N
+          bond_start_previous = chain 'K' and resid 44 and name O
+        }
+        strand {
+          selection = chain 'K' and resid 198 through 203
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'K' and resid 198 and name N
+          bond_start_previous = chain 'K' and resid 157 and name O
+        }
+        strand {
+          selection = chain 'K' and resid 220 through 224
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'K' and resid 221 and name N
+          bond_start_previous = chain 'K' and resid 199 and name O
+        }
+        strand {
+          selection = chain 'K' and resid 285 through 287
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'K' and resid 287 and name N
+          bond_start_previous = chain 'K' and resid 222 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'S' and resid 53 through 56
+        sheet_id = "  C"
+        strand {
+          selection = chain 'S' and resid 94 through 98
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 95 and name N
+          bond_start_previous = chain 'S' and resid 53 and name O
+        }
+        strand {
+          selection = chain 'S' and resid 82 through 86
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'S' and resid 86 and name N
+          bond_start_previous = chain 'S' and resid 94 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'S' and resid 100 through 104
+        sheet_id = "  D"
+        strand {
+          selection = chain 'S' and resid 59 through 63
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 59 and name N
+          bond_start_previous = chain 'S' and resid 101 and name O
+        }
+        strand {
+          selection = chain 'S' and resid 136 through 141
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 136 and name N
+          bond_start_previous = chain 'S' and resid 60 and name O
+        }
+        strand {
+          selection = chain 'S' and resid 163 through 165
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 164 and name N
+          bond_start_previous = chain 'S' and resid 139 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'S' and resid 261 through 263
+        sheet_id = "  E"
+        strand {
+          selection = chain 'S' and resid 220 through 229
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 221 and name N
+          bond_start_previous = chain 'S' and resid 261 and name O
+        }
+        strand {
+          selection = chain 'S' and resid 314 through 322
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 314 and name N
+          bond_start_previous = chain 'S' and resid 222 and name O
+        }
+        strand {
+          selection = chain 'S' and resid 353 through 356
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 354 and name N
+          bond_start_previous = chain 'S' and resid 319 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'S' and resid 225 through 229
+        sheet_id = "  F"
+        strand {
+          selection = chain 'S' and resid 266 through 270
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 267 and name N
+          bond_start_previous = chain 'S' and resid 225 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'S' and resid 236 through 238
+        sheet_id = "  G"
+        strand {
+          selection = chain 'S' and resid 371 through 373
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'S' and resid 372 and name N
+          bond_start_previous = chain 'S' and resid 236 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'T' and resid 278 through 280
+        sheet_id = "  H"
+        strand {
+          selection = chain 'T' and resid 289 through 294
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 290 and name N
+          bond_start_previous = chain 'T' and resid 279 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 252 through 258
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 257 and name N
+          bond_start_previous = chain 'T' and resid 291 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 3 through 13
+          sense = *parallel antiparallel unknown
+          bond_start_current = chain 'T' and resid 7 and name N
+          bond_start_previous = chain 'T' and resid 252 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 19 through 29
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 28 and name N
+          bond_start_previous = chain 'T' and resid 4 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 211 through 220
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 219 and name N
+          bond_start_previous = chain 'T' and resid 21 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 190 through 194
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 194 and name N
+          bond_start_previous = chain 'T' and resid 216 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'T' and resid 327 through 333
+        sheet_id = "  I"
+        strand {
+          selection = chain 'T' and resid 343 through 349
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 348 and name N
+          bond_start_previous = chain 'T' and resid 328 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 414 through 417
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 417 and name N
+          bond_start_previous = chain 'T' and resid 345 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 377 through 379
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 378 and name N
+          bond_start_previous = chain 'T' and resid 416 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'T' and resid 445 through 448
+        sheet_id = "  J"
+        strand {
+          selection = chain 'T' and resid 358 through 362
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 361 and name N
+          bond_start_previous = chain 'T' and resid 445 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 402 through 407
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 407 and name N
+          bond_start_previous = chain 'T' and resid 358 and name O
+        }
+        strand {
+          selection = chain 'T' and resid 389 through 392
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 392 and name N
+          bond_start_previous = chain 'T' and resid 402 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'T' and resid 368 through 371
+        sheet_id = "  K"
+        strand {
+          selection = chain 'T' and resid 420 through 423
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 422 and name N
+          bond_start_previous = chain 'T' and resid 369 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'T' and resid 449 through 451
+        sheet_id = "  L"
+        strand {
+          selection = chain 'T' and resid 478 through 480
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 479 and name N
+          bond_start_previous = chain 'T' and resid 450 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+      sheet {
+        enabled = True
+        first_strand = chain 'T' and resid 57 through 60
+        sheet_id = "  M"
+        strand {
+          selection = chain 'T' and resid 89 through 91
+          sense = parallel *antiparallel unknown
+          bond_start_current = chain 'T' and resid 90 and name N
+          bond_start_previous = chain 'T' and resid 58 and name O
+        }
+        sigma = 0.05
+        slack = 0
+        top_out = False
+        angle_sigma_scale = 1
+        angle_sigma_set = None
+        hbond {
+          donor = None
+          acceptor = None
+        }
+      }
+    }
+    nucleic_acid {
+      enabled = True
+      hbond_distance_cutoff = 3.4
+      angle_between_bond_and_nucleobase_cutoff = 35
+      scale_bonds_sigma = 1
+      base_pair {
+        enabled = True
+        base1 = None
+        base2 = None
+        saenger_class = 0
+        restrain_planarity = False
+        planarity_sigma = 0.176
+        restrain_hbonds = True
+        restrain_hb_angles = True
+        restrain_parallelity = True
+        parallelity_target = 0
+        parallelity_sigma = 0.0335
+      }
+      stacking_pair {
+        enabled = True
+        base1 = None
+        base2 = None
+        angle = 0
+        sigma = 0.027
+      }
+    }
+    ss_by_chain = True
+    from_ca_conservative = False
+    max_rmsd = 1
+    use_representative_chains = True
+    max_representative_chains = 100
+    enabled = True
+  }
+  c_beta_restraints = True
+  reference_coordinate_restraints {
+    enabled = False
+    exclude_outliers = True
+    selection = all
+    sigma = 0.2
+    limit = 1
+    top_out = False
+  }
+  automatic_linking {
+    link_all = False
+    link_none = False
+    link_metals = Auto
+    link_residues = False
+    link_amino_acid_rna_dna = False
+    link_carbohydrates = True
+    link_ligands = True
+    link_small_molecules = False
+    metal_coordination_cutoff = 3.5
+    amino_acid_bond_cutoff = 1.9
+    inter_residue_bond_cutoff = 2.2
+    buffer_for_second_row_elements = 0.5
+    carbohydrate_bond_cutoff = 1.99
+    ligand_bond_cutoff = 1.99
+    small_molecule_bond_cutoff = 1.98
+  }
+  include_in_automatic_linking {
+    selection_1 = None
+    selection_2 = None
+    bond_cutoff = 4.5
+  }
+  exclude_from_automatic_linking {
+    selection_1 = None
+    selection_2 = None
+  }
+  use_neutron_distances = False
+  apply_cis_trans_specification {
+    cis_trans_mod = cis *trans
+    residue_selection = None
+  }
+  apply_cif_restraints {
+    restraints_file_name = None
+    residue_selection = None
+  }
+  apply_cif_modification {
+    data_mod = None
+    residue_selection = None
+  }
+  apply_cif_link {
+    data_link = None
+    residue_selection_1 = None
+    residue_selection_2 = None
+  }
+  disulfide_bond_exclusions_selection_string = None
+  exclusion_distance_cutoff = 3
+  link_distance_cutoff = 3
+  disulfide_distance_cutoff = 3
+  add_angle_and_dihedral_restraints_for_disulfides = True
+  dihedral_function_type = *determined_by_sign_of_periodicity all_sinusoidal \
+                           all_harmonic
+  chir_volume_esd = 0.2
+  peptide_link {
+    ramachandran_restraints = False
+    cis_threshold = 45
+    apply_all_trans = False
+    discard_omega = False
+    discard_psi_phi = True
+    apply_peptide_plane = False
+    omega_esd_override_value = None
+    rama_weight = 1
+    scale_allowed = 1
+    rama_potential = *oldfield emsley
+    oldfield {
+      esd = 10
+      weight_scale = 1
+      dist_weight_max = 10
+      weight = None
+      plot_cutoff = 0.027
+    }
+    rama_selection = None
+    restrain_rama_outliers = True
+    restrain_rama_allowed = True
+    restrain_allowed_outliers_with_emsley = False
+  }
+  ramachandran_plot_restraints {
+    enabled = True
+    favored = *oldfield emsley emsley8k phi_psi_2
+    allowed = *oldfield emsley emsley8k phi_psi_2
+    outlier = *oldfield emsley emsley8k phi_psi_2
+    selection = None
+    inject_emsley8k_into_oldfield_favored = True
+    oldfield {
+      weight = 0
+      weight_scale = 0.01
+      distance_weight_min = 2
+      distance_weight_max = 10
+      plot_cutoff = 0.027
+    }
+    emsley {
+      weight = 1
+      scale_allowed = 1
+    }
+    emsley8k {
+      weight_favored = 5
+      weight_allowed = 10
+      weight_outlier = 10
+    }
+    phi_psi_2 {
+      favored_strategy = *closest highest_probability random weighted_random
+      allowed_strategy = *closest highest_probability random weighted_random
+      outlier_strategy = *closest highest_probability random weighted_random
+    }
+  }
+  max_reasonable_bond_distance = None
+  nonbonded_distance_cutoff = None
+  default_vdw_distance = 1
+  min_vdw_distance = 1
+  nonbonded_buffer = 1
+  nonbonded_weight = 100
+  const_shrink_donor_acceptor = 0.6
+  vdw_1_4_factor = 0.8
+  min_distance_sym_equiv = 0.5
+  custom_nonbonded_symmetry_exclusions = None
+  translate_cns_dna_rna_residue_names = None
+  proceed_with_excessive_length_bonds = False
+  rna_sugar_pucker_analysis {
+    bond_min_distance = 1.2
+    bond_max_distance = 1.8
+    epsilon_range_min = 155
+    epsilon_range_max = 310
+    delta_range_2p_min = 129
+    delta_range_2p_max = 162
+    delta_range_3p_min = 65
+    delta_range_3p_max = 104
+    p_distance_c1p_outbound_line_2p_max = 2.9
+    o3p_distance_c1p_outbound_line_2p_max = 2.4
+    bond_detection_distance_tolerance = 0.5
+  }
+  show_histogram_slots {
+    bond_lengths = 5
+    nonbonded_interaction_distances = 5
+    bond_angle_deviations_from_ideal = 5
+    dihedral_angle_deviations_from_ideal = 5
+    chiral_volume_deviations_from_ideal = 5
+  }
+  show_max_items {
+    not_linked = 5
+    bond_restraints_sorted_by_residual = 5
+    nonbonded_interactions_sorted_by_model_distance = 5
+    bond_angle_restraints_sorted_by_residual = 5
+    dihedral_angle_restraints_sorted_by_residual = 3
+    chirality_restraints_sorted_by_residual = 3
+    planarity_restraints_sorted_by_residual = 3
+    residues_with_excluded_nonbonded_symmetry_interactions = 12
+    fatal_problem_max_lines = 10
+  }
+  ncs_group {
+    reference = None
+    selection = None
+  }
+  ncs_search {
+    enabled = False
+    exclude_selection = water
+    chain_similarity_threshold = 0.85
+    chain_max_rmsd = 999
+    residue_match_radius = 1000
+    try_shortcuts = False
+    minimum_number_of_atoms_in_copy = 3
+    validate_user_supplied_groups = True
+  }
+  clash_guard {
+    nonbonded_distance_threshold = 0.5
+    max_number_of_distances_below_threshold = 100
+    max_fraction_of_distances_below_threshold = 0.1
+  }
+}
+geometry_restraints {
+  edits {
+    excessive_bond_distance_limit = 10
+    bond {
+      action = *add delete change
+      atom_selection_1 = None
+      atom_selection_2 = None
+      symmetry_operation = None
+      distance_ideal = None
+      sigma = None
+      slack = None
+      limit = -1.0
+      top_out = False
+    }
+    angle {
+      action = *add delete change
+      atom_selection_1 = None
+      atom_selection_2 = None
+      atom_selection_3 = None
+      angle_ideal = None
+      sigma = None
+    }
+    dihedral {
+      action = *add delete change
+      atom_selection_1 = None
+      atom_selection_2 = None
+      atom_selection_3 = None
+      atom_selection_4 = None
+      angle_ideal = None
+      alt_angle_ideals = None
+      sigma = None
+      periodicity = 1
+    }
+    planarity {
+      action = *add delete change
+      atom_selection = None
+      sigma = None
+    }
+    parallelity {
+      action = *add delete change
+      atom_selection_1 = None
+      atom_selection_2 = None
+      sigma = 0.027
+      target_angle_deg = 0
+    }
+  }
+  remove {
+    angles = None
+    dihedrals = None
+    chiralities = None
+    planarities = None
+    parallelities = None
+  }
+}
+simulated_annealing {
+  start_temperature = 5000
+  final_temperature = 300
+  cool_rate = 100
+  number_of_steps = 50
+  time_step = 0.0005
+  initial_velocities_zero_fraction = 0
+  interleave_minimization = False
+  verbose = -1
+  n_print = 100
+  update_grads_shift = 0.3
+  random_seed = None
+}
+output {
+  suffix = "_real_space_refined"
+  filename = None
+  file_name = None
+  prefix = "7w72_EModelX_all_atom_model"
+  serial = 0
+  overwrite = True
+}
+job_title = None
+gui {
+  output_dir = None
+  run_validation = True
+}

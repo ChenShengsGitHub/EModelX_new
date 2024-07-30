@@ -1,0 +1,1081 @@
+Starting phenix.real_space_refine (version: 1.20.1)
+on Tue Jul  2 11:02:08 2024 by chens
+===============================================================================
+
+Processing files:
+-------------------------------------------------------------------------------
+
+  Found model, /home/chens/projects/EModelX_new/data/outputs/7w72_EModelX(+AF)_all_atom_model.pdb
+  Found real_map, /home/chens/projects/EModelX_new/data/inputs/maps/emd_32336.map.gz
+  Found phil, /home/chens/projects/EModelX_new/data/inputs/phenix.eff
+
+Processing PHIL parameters:
+-------------------------------------------------------------------------------
+
+  Adding PHIL files:
+  ------------------
+    /home/chens/projects/EModelX_new/data/inputs/phenix.eff
+
+  Adding command-line PHIL:
+  -------------------------
+    resolution=3.1
+
+Final processed PHIL parameters:
+-------------------------------------------------------------------------------
+  data_manager {
+    phil_files = "/home/chens/projects/EModelX_new/data/inputs/phenix.eff"
+    default_phil = "/home/chens/projects/EModelX_new/data/inputs/phenix.eff"
+    real_map_files = "/home/chens/projects/EModelX_new/data/inputs/maps/emd_32336.map.gz"
+    default_real_map = "/home/chens/projects/EModelX_new/data/inputs/maps/emd_32336.map.gz"
+    model {
+      file = "/home/chens/projects/EModelX_new/data/outputs/7w72_EModelX(+AF)_all_atom_model.pdb"
+    }
+    default_model = "/home/chens/projects/EModelX_new/data/outputs/7w72_EModelX(+AF)_all_atom_model.pdb"
+  }
+  resolution = 3.1
+  write_initial_geo_file = False
+  nproc = 8
+  pdb_interpretation {
+    max_reasonable_bond_distance = None
+  }
+  output {
+    overwrite = True
+  }
+
+
+Starting job
+===============================================================================
+-------------------------------------------------------------------------------
+Citation:
+*********
+Afonine PV, Poon BK, Read RJ, Sobolev OV, Terwilliger TC, Urzhumtsev A, Adams
+PD. (2018) Real-space refinement in PHENIX for cryo-EM and crystallography.
+Acta Cryst. D74:531-544.
+
+Validating inputs
+-------------------------------------------------------------------------------
+Processing inputs
+*****************
+Set random seed
+  Set to: 0
+Set model cs if undefined
+Decide on map wrapping
+  Map wrapping is set to: False
+Normalize map: mean=0, sd=1
+  Input map: mean=   0.000 sd=   0.003
+Set stop_for_unknowns flag
+  Set to: True
+Assert model is a single copy model
+Construct map_model_manager
+Extract box with map and model
+Check model and map are aligned
+Convert atoms to be neutral
+Process input model
+
+  Symmetric amino acids flipped
+    Residue "A GLU   52": "OE1" <-> "OE2"
+    Residue "A PHE  114": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "A GLU  142": "OE1" <-> "OE2"
+    Residue "A ASP  188": "OD1" <-> "OD2"
+    Residue "A GLU  226": "OE1" <-> "OE2"
+    Residue "A PHE  581": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "K GLU  109": "OE1" <-> "OE2"
+    Residue "K PHE  131": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "K ARG  145": "NH1" <-> "NH2"
+    Residue "K PHE  169": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "K ASP  302": "OD1" <-> "OD2"
+    Residue "K PHE  382": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "K TYR  386": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "S TYR   42": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "S TYR   90": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "S GLU  130": "OE1" <-> "OE2"
+    Residue "S GLU  143": "OE1" <-> "OE2"
+    Residue "S PHE  173": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "S ASP  510": "OD1" <-> "OD2"
+    Residue "S PHE  513": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "T ARG   58": "NH1" <-> "NH2"
+    Residue "T PHE   64": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "T PHE  132": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "T ARG  153": "NH1" <-> "NH2"
+    Residue "T PHE  356": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "T ASP  434": "OD1" <-> "OD2"
+    Residue "U TYR  119": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "U PHE  200": "CD1" <-> "CD2" "CE1" <-> "CE2"
+    Residue "U TYR  405": "CD1" <-> "CD2" "CE1" <-> "CE2"
+  Time to flip residues: 0.02s
+
+  Monomer Library directory:
+    "/home/chens/projects/EModelX_new/modules/phenix-1.20.1-4487/modules/chem_data/mon_lib"
+  Total number of atoms: 19090
+  Number of models: 1
+  Model: ""
+    Number of chains: 5
+    Chain: "A"
+      Number of atoms: 4465
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 581, 4465
+          Classifications: {'peptide': 581}
+          Link IDs: {'PTRANS': 27, 'CIS': 2, 'TRANS': 551}
+          Chain breaks: 2
+    Chain: "K"
+      Number of atoms: 2825
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 348, 2825
+          Classifications: {'peptide': 348}
+          Link IDs: {'PTRANS': 19, 'CIS': 2, 'TRANS': 326}
+          Chain breaks: 1
+    Chain: "S"
+      Number of atoms: 4103
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 525, 4103
+          Classifications: {'peptide': 525}
+          Link IDs: {'PTRANS': 30, 'TRANS': 494}
+    Chain: "T"
+      Number of atoms: 4268
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 527, 4268
+          Classifications: {'peptide': 527}
+          Link IDs: {'PTRANS': 40, 'TRANS': 486}
+    Chain: "U"
+      Number of atoms: 3429
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 419, 3429
+          Classifications: {'peptide': 419}
+          Link IDs: {'PTRANS': 19, 'TRANS': 399}
+  Time building chain proxies: 4.94, per 1000 atoms: 0.26
+  Number of scatterers: 19090
+  At special positions: 0
+  Unit cell: (95.68, 126.88, 158.08, 90, 90, 90)
+  Space group: P 1 (No. 1)
+  Number of sites at special positions: 0
+  Number of scattering types: 4
+    Type Number    sf(0)
+     S      81     16.00
+     O    3390      8.00
+     N    3154      7.00
+     C   12465      6.00
+    sf(0) = scattering factor at diffraction angle 0.
+
+  Number of disulfides: simple=3, symmetry=0
+    Simple disulfide: pdb=" SG  CYS A 259 " - pdb=" SG  CYS A 266 " distance=1.72
+    Simple disulfide: pdb=" SG  CYS K  92 " - pdb=" SG  CYS T 157 " distance=1.73
+    Simple disulfide: pdb=" SG  CYS T 170 " - pdb=" SG  CYS T 247 " distance=2.44
+
+  Automatic linking
+    Parameters for automatic linking
+      Linking & cutoffs
+        Metal                : Auto  - 3.50
+        Amino acid           : False - 1.90
+        Carbohydrate         : True  - 1.99
+        Ligands              : True  - 1.99
+        Small molecules      : False - 1.98
+        Amino acid - RNA/DNA : False
+      
+  Number of custom bonds: simple=0, symmetry=0
+  Time building additional restraints: 3.62
+  Conformation dependent library (CDL) restraints added in 1.3 seconds
+  
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+  Adding C-beta torsion restraints...
+  Number of C-beta restraints generated:  4568
+
+  Finding SS restraints...
+  running ksdssp...
+    Secondary structure from input PDB file:
+      77 helices and 13 sheets defined
+      41.4% alpha, 8.4% beta
+      0 base pairs and 0 stacking pairs defined.
+    Time for finding SS restraints: 1.20
+  Creating SS restraints...
+    Processing helix  chain 'A' and resid 13 through 40
+      removed outlier: 3.796A  pdb=" N   ASN A  21 " --> pdb=" O   LEU A  18 " (cutoff:3.500A)
+      removed outlier: 5.065A  pdb=" N   ALA A  22 " --> pdb=" O   ARG A  19 " (cutoff:3.500A)
+      Proline residue:  A  23  - end of helix
+      removed outlier: 3.629A  pdb=" N   GLY A  32 " --> pdb=" O   TYR A  29 " (cutoff:3.500A)
+      removed outlier: 3.751A  pdb=" N   ILE A  33 " --> pdb=" O   VAL A  30 " (cutoff:3.500A)
+      removed outlier: 3.593A  pdb=" N   VAL A  40 " --> pdb=" O   LEU A  37 " (cutoff:3.500A)
+    Processing helix  chain 'A' and resid 53 through 56
+      No H-bonds generated for 'chain 'A' and resid 53 through 56'
+    Processing helix  chain 'A' and resid 67 through 83
+    Processing helix  chain 'A' and resid 89 through 98
+    Processing helix  chain 'A' and resid 157 through 171
+    Processing helix  chain 'A' and resid 191 through 200
+    Processing helix  chain 'A' and resid 242 through 244
+      No H-bonds generated for 'chain 'A' and resid 242 through 244'
+    Processing helix  chain 'A' and resid 249 through 261
+    Processing helix  chain 'A' and resid 281 through 298
+      removed outlier: 3.669A  pdb=" N   LEU A 295 " --> pdb=" O   LEU A 291 " (cutoff:3.500A)
+    Processing helix  chain 'A' and resid 308 through 312
+      removed outlier: 4.313A  pdb=" N   TYR A 312 " --> pdb=" O   LEU A 308 " (cutoff:3.500A)
+      No H-bonds generated for 'chain 'A' and resid 308 through 312'
+    Processing helix  chain 'A' and resid 332 through 347
+    Processing helix  chain 'A' and resid 371 through 396
+      Proline residue:  A 376  - end of helix
+      removed outlier: 3.680A  pdb=" N   VAL A 384 " --> pdb=" O   PHE A 380 " (cutoff:3.500A)
+      removed outlier: 3.883A  pdb=" N   LEU A 385 " --> pdb=" O   LEU A 381 " (cutoff:3.500A)
+    Processing helix  chain 'A' and resid 426 through 447
+      Proline residue:  A 430  - end of helix
+      removed outlier: 3.505A  pdb=" N   SER A 434 " --> pdb=" O   PRO A 430 " (cutoff:3.500A)
+      Proline residue:  A 445  - end of helix
+    Processing helix  chain 'A' and resid 451 through 454
+      No H-bonds generated for 'chain 'A' and resid 451 through 454'
+    Processing helix  chain 'A' and resid 460 through 477
+      removed outlier: 3.604A  pdb=" N   VAL A 464 " --> pdb=" O   GLU A 460 " (cutoff:3.500A)
+      removed outlier: 3.703A  pdb=" N   LEU A 476 " --> pdb=" O   TYR A 472 " (cutoff:3.500A)
+    Processing helix  chain 'A' and resid 496 through 516
+    Processing helix  chain 'A' and resid 518 through 532
+      Proline residue:  A 530  - end of helix
+    Processing helix  chain 'A' and resid 541 through 550
+    Processing helix  chain 'A' and resid 553 through 567
+      removed outlier: 3.998A  pdb=" N   ARG A 565 " --> pdb=" O   LEU A 561 " (cutoff:3.500A)
+    Processing helix  chain 'A' and resid 575 through 595
+      removed outlier: 3.697A  pdb=" N   ALA A 583 " --> pdb=" O   GLN A 579 " (cutoff:3.500A)
+      removed outlier: 3.914A  pdb=" N   ALA A 586 " --> pdb=" O   LEU A 582 " (cutoff:3.500A)
+    Processing helix  chain 'A' and resid 598 through 604
+    Processing helix  chain 'A' and resid 607 through 614
+    Processing helix  chain 'K' and resid 56 through 74
+      removed outlier: 4.717A  pdb=" N   ARG K  60 " --> pdb=" O   PHE K  57 " (cutoff:3.500A)
+      removed outlier: 4.372A  pdb=" N   VAL K  62 " --> pdb=" O   TYR K  59 " (cutoff:3.500A)
+      removed outlier: 3.600A  pdb=" N   ALA K  63 " --> pdb=" O   ARG K  60 " (cutoff:3.500A)
+      removed outlier: 3.592A  pdb=" N   LEU K  66 " --> pdb=" O   ALA K  63 " (cutoff:3.500A)
+      removed outlier: 3.571A  pdb=" N   SER K  67 " --> pdb=" O   ASN K  64 " (cutoff:3.500A)
+      removed outlier: 3.970A  pdb=" N   SER K  71 " --> pdb=" O   VAL K  68 " (cutoff:3.500A)
+    Processing helix  chain 'K' and resid 123 through 125
+      No H-bonds generated for 'chain 'K' and resid 123 through 125'
+    Processing helix  chain 'K' and resid 128 through 136
+    Processing helix  chain 'K' and resid 180 through 193
+    Processing helix  chain 'K' and resid 211 through 213
+      No H-bonds generated for 'chain 'K' and resid 211 through 213'
+    Processing helix  chain 'K' and resid 248 through 258
+    Processing helix  chain 'K' and resid 268 through 272
+    Processing helix  chain 'K' and resid 288 through 290
+      No H-bonds generated for 'chain 'K' and resid 288 through 290'
+    Processing helix  chain 'K' and resid 300 through 304
+    Processing helix  chain 'K' and resid 338 through 340
+      No H-bonds generated for 'chain 'K' and resid 338 through 340'
+    Processing helix  chain 'K' and resid 351 through 357
+    Processing helix  chain 'K' and resid 368 through 382
+      removed outlier: 3.689A  pdb=" N   LEU K 372 " --> pdb=" O   GLY K 368 " (cutoff:3.500A)
+    Processing helix  chain 'S' and resid 5 through 33
+      Proline residue:  S  27  - end of helix
+      removed outlier: 4.212A  pdb=" N   TRP S  30 " --> pdb=" O   LEU S  26 " (cutoff:3.500A)
+    Processing helix  chain 'S' and resid 42 through 49
+      removed outlier: 3.789A  pdb=" N   SER S  46 " --> pdb=" O   TYR S  42 " (cutoff:3.500A)
+      removed outlier: 3.632A  pdb=" N   GLY S  47 " --> pdb=" O   SER S  43 " (cutoff:3.500A)
+      removed outlier: 3.752A  pdb=" N   ASN S  49 " --> pdb=" O   ILE S  45 " (cutoff:3.500A)
+    Processing helix  chain 'S' and resid 70 through 74
+    Processing helix  chain 'S' and resid 107 through 114
+    Processing helix  chain 'S' and resid 118 through 124
+    Processing helix  chain 'S' and resid 172 through 187
+      removed outlier: 3.600A  pdb=" N   VAL S 181 " --> pdb=" O   GLY S 177 " (cutoff:3.500A)
+    Processing helix  chain 'S' and resid 191 through 200
+      removed outlier: 4.071A  pdb=" N   ALA S 196 " --> pdb=" O   ASP S 192 " (cutoff:3.500A)
+      removed outlier: 4.478A  pdb=" N   ALA S 197 " --> pdb=" O   VAL S 193 " (cutoff:3.500A)
+      removed outlier: 5.617A  pdb=" N   ASP S 200 " --> pdb=" O   ALA S 196 " (cutoff:3.500A)
+    Processing helix  chain 'S' and resid 210 through 213
+    Processing helix  chain 'S' and resid 241 through 247
+    Processing helix  chain 'S' and resid 249 through 259
+      removed outlier: 3.608A  pdb=" N   ALA S 255 " --> pdb=" O   PRO S 251 " (cutoff:3.500A)
+      removed outlier: 5.211A  pdb=" N   ALA S 258 " --> pdb=" O   ASN S 254 " (cutoff:3.500A)
+      removed outlier: 5.704A  pdb=" N   ALA S 259 " --> pdb=" O   ALA S 255 " (cutoff:3.500A)
+    Processing helix  chain 'S' and resid 292 through 294
+      No H-bonds generated for 'chain 'S' and resid 292 through 294'
+    Processing helix  chain 'S' and resid 300 through 306
+      removed outlier: 3.671A  pdb=" N   SER S 303 " --> pdb=" O   PRO S 300 " (cutoff:3.500A)
+      removed outlier: 4.374A  pdb=" N   ARG S 304 " --> pdb=" O   VAL S 301 " (cutoff:3.500A)
+      removed outlier: 3.614A  pdb=" N   LEU S 305 " --> pdb=" O   GLU S 302 " (cutoff:3.500A)
+      removed outlier: 3.826A  pdb=" N   GLY S 306 " --> pdb=" O   SER S 303 " (cutoff:3.500A)
+      No H-bonds generated for 'chain 'S' and resid 300 through 306'
+    Processing helix  chain 'S' and resid 360 through 363
+    Processing helix  chain 'S' and resid 376 through 390
+    Processing helix  chain 'S' and resid 414 through 444
+    Processing helix  chain 'S' and resid 453 through 475
+    Processing helix  chain 'S' and resid 480 through 496
+    Processing helix  chain 'T' and resid 46 through 54
+      removed outlier: 3.550A  pdb=" N   LEU T  51 " --> pdb=" O   ALA T  47 " (cutoff:3.500A)
+      removed outlier: 3.999A  pdb=" N   ILE T  52 " --> pdb=" O   LEU T  48 " (cutoff:3.500A)
+      removed outlier: 3.873A  pdb=" N   SER T  53 " --> pdb=" O   GLY T  49 " (cutoff:3.500A)
+    Processing helix  chain 'T' and resid 98 through 113
+      removed outlier: 3.537A  pdb=" N   GLY T 111 " --> pdb=" O   ASN T 107 " (cutoff:3.500A)
+    Processing helix  chain 'T' and resid 143 through 145
+      No H-bonds generated for 'chain 'T' and resid 143 through 145'
+    Processing helix  chain 'T' and resid 158 through 167
+      Proline residue:  T 163  - end of helix
+      removed outlier: 3.538A  pdb=" N   LEU T 167 " --> pdb=" O   PRO T 163 " (cutoff:3.500A)
+    Processing helix  chain 'T' and resid 175 through 180
+      removed outlier: 4.061A  pdb=" N   LEU T 179 " --> pdb=" O   GLY T 175 " (cutoff:3.500A)
+      removed outlier: 4.318A  pdb=" N   LEU T 180 " --> pdb=" O   LEU T 176 " (cutoff:3.500A)
+      No H-bonds generated for 'chain 'T' and resid 175 through 180'
+    Processing helix  chain 'T' and resid 182 through 186
+    Processing helix  chain 'T' and resid 235 through 239
+    Processing helix  chain 'T' and resid 500 through 523
+      removed outlier: 3.710A  pdb=" N   CYS T 508 " --> pdb=" O   ILE T 504 " (cutoff:3.500A)
+      removed outlier: 3.549A  pdb=" N   LEU T 521 " --> pdb=" O   SER T 517 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 5 through 20
+    Processing helix  chain 'U' and resid 24 through 30
+    Processing helix  chain 'U' and resid 41 through 50
+    Processing helix  chain 'U' and resid 67 through 115
+      removed outlier: 3.518A  pdb=" N   TYR U  71 " --> pdb=" O   PRO U  67 " (cutoff:3.500A)
+      removed outlier: 5.348A  pdb=" N   ASP U  78 " --> pdb=" O   HIS U  74 " (cutoff:3.500A)
+      removed outlier: 5.362A  pdb=" N   TYR U  79 " --> pdb=" O   PHE U  75 " (cutoff:3.500A)
+      removed outlier: 5.906A  pdb=" N   GLU U  81 " --> pdb=" O   ILE U  77 " (cutoff:3.500A)
+      removed outlier: 6.620A  pdb=" N   LEU U  82 " --> pdb=" O   ASP U  78 " (cutoff:3.500A)
+      removed outlier: 3.554A  pdb=" N   VAL U  83 " --> pdb=" O   TYR U  79 " (cutoff:3.500A)
+      removed outlier: 3.786A  pdb=" N   THR U  91 " --> pdb=" O   THR U  87 " (cutoff:3.500A)
+      removed outlier: 3.794A  pdb=" N   ALA U  94 " --> pdb=" O   LEU U  90 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 130 through 146
+      removed outlier: 4.494A  pdb=" N   TYR U 135 " --> pdb=" O   MET U 131 " (cutoff:3.500A)
+      removed outlier: 3.826A  pdb=" N   ILE U 136 " --> pdb=" O   GLU U 132 " (cutoff:3.500A)
+      Proline residue:  U 137  - end of helix
+      removed outlier: 3.752A  pdb=" N   ALA U 141 " --> pdb=" O   PRO U 137 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 149 through 155
+    Processing helix  chain 'U' and resid 160 through 176
+    Processing helix  chain 'U' and resid 179 through 192
+      removed outlier: 3.693A  pdb=" N   ALA U 189 " --> pdb=" O   PHE U 185 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 194 through 211
+      removed outlier: 3.607A  pdb=" N   THR U 198 " --> pdb=" O   TYR U 195 " (cutoff:3.500A)
+      Proline residue:  U 202  - end of helix
+    Processing helix  chain 'U' and resid 220 through 247
+      removed outlier: 3.750A  pdb=" N   PHE U 246 " --> pdb=" O   CYS U 242 " (cutoff:3.500A)
+      removed outlier: 3.956A  pdb=" N   LEU U 247 " --> pdb=" O   LEU U 243 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 257 through 262
+      removed outlier: 3.544A  pdb=" N   ILE U 261 " --> pdb=" O   VAL U 257 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 275 through 279
+    Processing helix  chain 'U' and resid 283 through 307
+      removed outlier: 4.492A  pdb=" N   LEU U 287 " --> pdb=" O   GLU U 283 " (cutoff:3.500A)
+      removed outlier: 4.605A  pdb=" N   PHE U 288 " --> pdb=" O   HIS U 284 " (cutoff:3.500A)
+      removed outlier: 3.920A  pdb=" N   VAL U 297 " --> pdb=" O   PHE U 293 " (cutoff:3.500A)
+      removed outlier: 3.961A  pdb=" N   TYR U 300 " --> pdb=" O   ASN U 296 " (cutoff:3.500A)
+      removed outlier: 4.888A  pdb=" N   THR U 301 " --> pdb=" O   VAL U 297 " (cutoff:3.500A)
+      removed outlier: 4.683A  pdb=" N   ILE U 302 " --> pdb=" O   PHE U 298 " (cutoff:3.500A)
+      Proline residue:  U 303  - end of helix
+      removed outlier: 4.077A  pdb=" N   LYS U 307 " --> pdb=" O   PRO U 303 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 312 through 326
+      removed outlier: 3.831A  pdb=" N   ALA U 321 " --> pdb=" O   PHE U 317 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 332 through 342
+      removed outlier: 3.778A  pdb=" N   TYR U 338 " --> pdb=" O   ASP U 334 " (cutoff:3.500A)
+      removed outlier: 3.524A  pdb=" N   PHE U 341 " --> pdb=" O   LEU U 337 " (cutoff:3.500A)
+      removed outlier: 3.841A  pdb=" N   PHE U 342 " --> pdb=" O   TYR U 338 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 345 through 351
+      removed outlier: 3.962A  pdb=" N   ARG U 350 " --> pdb=" O   HIS U 347 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 355 through 376
+      removed outlier: 4.057A  pdb=" N   THR U 359 " --> pdb=" O   PHE U 356 " (cutoff:3.500A)
+      removed outlier: 3.510A  pdb=" N   LEU U 368 " --> pdb=" O   CYS U 365 " (cutoff:3.500A)
+      Proline residue:  U 370  - end of helix
+      removed outlier: 3.834A  pdb=" N   TRP U 373 " --> pdb=" O   PRO U 370 " (cutoff:3.500A)
+    Processing helix  chain 'U' and resid 384 through 417
+      removed outlier: 3.758A  pdb=" N   TYR U 388 " --> pdb=" O   SER U 384 " (cutoff:3.500A)
+      removed outlier: 3.530A  pdb=" N   ILE U 399 " --> pdb=" O   ASN U 395 " (cutoff:3.500A)
+      removed outlier: 3.507A  pdb=" N   ALA U 408 " --> pdb=" O   ASP U 404 " (cutoff:3.500A)
+      removed outlier: 3.525A  pdb=" N   TYR U 414 " --> pdb=" O   LEU U 410 " (cutoff:3.500A)
+    Processing sheet with id=  A, first strand: chain 'A' and resid 179 through 182
+      removed outlier: 5.774A  pdb=" N   ALA A 218 " --> pdb=" O   SER A 143 " (cutoff:3.500A)
+      removed outlier: 7.500A  pdb=" N   VAL A 145 " --> pdb=" O   ALA A 218 " (cutoff:3.500A)
+      removed outlier: 8.690A  pdb=" N   GLN A 220 " --> pdb=" O   VAL A 145 " (cutoff:3.500A)
+      removed outlier: 12.228A  pdb=" N   THR A 147 " --> pdb=" O   GLN A 220 " (cutoff:3.500A)
+      removed outlier: 9.877A  pdb=" N   ALA A 222 " --> pdb=" O   THR A 147 " (cutoff:3.500A)
+      removed outlier: 3.592A  pdb=" N   ALA A 238 " --> pdb=" O   THR A 318 " (cutoff:3.500A)
+    Processing sheet with id=  B, first strand: chain 'K' and resid 82 through 84
+      removed outlier: 8.554A  pdb=" N   VAL K  83 " --> pdb=" O   ASN K  45 " (cutoff:3.500A)
+      removed outlier: 6.901A  pdb=" N   ALA K  47 " --> pdb=" O   VAL K  83 " (cutoff:3.500A)
+      removed outlier: 6.582A  pdb=" N   GLU K 198 " --> pdb=" O   ILE K 157 " (cutoff:3.500A)
+      removed outlier: 7.718A  pdb=" N   ILE K 159 " --> pdb=" O   GLU K 198 " (cutoff:3.500A)
+      removed outlier: 6.312A  pdb=" N   LEU K 200 " --> pdb=" O   ILE K 159 " (cutoff:3.500A)
+      removed outlier: 7.550A  pdb=" N   MET K 161 " --> pdb=" O   LEU K 200 " (cutoff:3.500A)
+      removed outlier: 6.636A  pdb=" N   ILE K 202 " --> pdb=" O   MET K 161 " (cutoff:3.500A)
+      removed outlier: 3.718A  pdb=" N   ALA K 222 " --> pdb=" O   ARG K 287 " (cutoff:3.500A)
+      removed outlier: 3.586A  pdb=" N   ALA K 224 " --> pdb=" O   GLY K 285 " (cutoff:3.500A)
+    Processing sheet with id=  C, first strand: chain 'S' and resid 53 through 56
+      removed outlier: 3.936A  pdb=" N   ILE S  94 " --> pdb=" O   ILE S  86 " (cutoff:3.500A)
+    Processing sheet with id=  D, first strand: chain 'S' and resid 100 through 104
+      removed outlier: 7.204A  pdb=" N   VAL S  59 " --> pdb=" O   ALA S 101 " (cutoff:3.500A)
+      removed outlier: 7.781A  pdb=" N   ARG S 103 " --> pdb=" O   VAL S  59 " (cutoff:3.500A)
+      removed outlier: 6.685A  pdb=" N   VAL S  61 " --> pdb=" O   ARG S 103 " (cutoff:3.500A)
+      removed outlier: 6.412A  pdb=" N   LEU S 136 " --> pdb=" O   THR S  60 " (cutoff:3.500A)
+      removed outlier: 7.692A  pdb=" N   VAL S  62 " --> pdb=" O   LEU S 136 " (cutoff:3.500A)
+      removed outlier: 6.917A  pdb=" N   VAL S 138 " --> pdb=" O   VAL S  62 " (cutoff:3.500A)
+    Processing sheet with id=  E, first strand: chain 'S' and resid 261 through 263
+      removed outlier: 7.544A  pdb=" N   THR S 224 " --> pdb=" O   PRO S 314 " (cutoff:3.500A)
+      removed outlier: 6.782A  pdb=" N   LEU S 316 " --> pdb=" O   THR S 224 " (cutoff:3.500A)
+      removed outlier: 7.354A  pdb=" N   SER S 226 " --> pdb=" O   LEU S 316 " (cutoff:3.500A)
+      removed outlier: 6.234A  pdb=" N   PHE S 318 " --> pdb=" O   SER S 226 " (cutoff:3.500A)
+      removed outlier: 7.177A  pdb=" N   LEU S 228 " --> pdb=" O   PHE S 318 " (cutoff:3.500A)
+      removed outlier: 6.431A  pdb=" N   LEU S 320 " --> pdb=" O   LEU S 228 " (cutoff:3.500A)
+    Processing sheet with id=  F, first strand: chain 'S' and resid 225 through 229
+    Processing sheet with id=  G, first strand: chain 'S' and resid 236 through 238
+    Processing sheet with id=  H, first strand: chain 'T' and resid 278 through 280
+      removed outlier: 3.552A  pdb=" N   VAL T 220 " --> pdb=" O   TYR T 190 " (cutoff:3.500A)
+      removed outlier: 4.090A  pdb=" N   TYR T 190 " --> pdb=" O   VAL T 220 " (cutoff:3.500A)
+    Processing sheet with id=  I, first strand: chain 'T' and resid 327 through 333
+      removed outlier: 3.664A  pdb=" N   HIS T 328 " --> pdb=" O   TYR T 348 " (cutoff:3.500A)
+    Processing sheet with id=  J, first strand: chain 'T' and resid 445 through 448
+      removed outlier: 3.671A  pdb=" N   GLU T 404 " --> pdb=" O   HIS T 390 " (cutoff:3.500A)
+    Processing sheet with id=  K, first strand: chain 'T' and resid 368 through 371
+      removed outlier: 4.111A  pdb=" N   GLN T 420 " --> pdb=" O   TYR T 371 " (cutoff:3.500A)
+    Processing sheet with id=  L, first strand: chain 'T' and resid 449 through 451
+    Processing sheet with id=  M, first strand: chain 'T' and resid 57 through 60
+      removed outlier: 6.070A  pdb=" N   TRP T  90 " --> pdb=" O   ARG T  58 " (cutoff:3.500A)
+
+    700 hydrogen bonds defined for protein.
+    1896 hydrogen bond angles defined for protein.
+    Restraints generated for nucleic acids:
+      0 hydrogen bonds
+      0 hydrogen bond angles
+      0 basepair planarities
+      0 basepair parallelities
+      0 stacking parallelities
+  Total time for adding SS restraints: 3.66
+
+  Time building geometry restraints manager: 3.86 seconds
+
+  NOTE: a complete listing of the restraints can be obtained by requesting
+        output of .geo file.
+
+  Histogram of bond lengths:
+        0.77 -     1.41: 9503
+        1.41 -     2.05: 10040
+        2.05 -     2.70: 50
+        2.70 -     3.34: 8
+        3.34 -     3.98: 5
+  Bond restraints: 19606
+  Sorted by residual:
+  bond pdb=" N   PRO S 278 "
+       pdb=" CD  PRO S 278 "
+    ideal  model  delta    sigma   weight residual
+    1.473  3.979 -2.506 1.40e-02 5.10e+03 3.21e+04
+  bond pdb=" N   PRO T 323 "
+       pdb=" CD  PRO T 323 "
+    ideal  model  delta    sigma   weight residual
+    1.473  3.932 -2.459 1.40e-02 5.10e+03 3.09e+04
+  bond pdb=" N   PRO T  77 "
+       pdb=" CD  PRO T  77 "
+    ideal  model  delta    sigma   weight residual
+    1.473  3.725 -2.252 1.40e-02 5.10e+03 2.59e+04
+  bond pdb=" N   PRO T 275 "
+       pdb=" CD  PRO T 275 "
+    ideal  model  delta    sigma   weight residual
+    1.473  3.716 -2.243 1.40e-02 5.10e+03 2.57e+04
+  bond pdb=" N   PRO S 128 "
+       pdb=" CD  PRO S 128 "
+    ideal  model  delta    sigma   weight residual
+    1.473  3.433 -1.960 1.40e-02 5.10e+03 1.96e+04
+  ... (remaining 19601 not shown)
+
+  Histogram of bond angle deviations from ideal:
+        6.68 -    40.67: 10
+       40.67 -    74.66: 87
+       74.66 -   108.65: 4917
+      108.65 -   142.64: 21559
+      142.64 -   176.63: 154
+  Bond angle restraints: 26727
+  Sorted by residual:
+  angle pdb=" CA  PRO S 278 "
+        pdb=" N   PRO S 278 "
+        pdb=" CD  PRO S 278 "
+      ideal   model   delta    sigma   weight residual
+     112.00    6.68  105.32 1.40e+00 5.10e-01 5.66e+03
+  angle pdb=" CA  PRO T 275 "
+        pdb=" N   PRO T 275 "
+        pdb=" CD  PRO T 275 "
+      ideal   model   delta    sigma   weight residual
+     112.00    9.65  102.35 1.40e+00 5.10e-01 5.34e+03
+  angle pdb=" CA  PRO T  77 "
+        pdb=" N   PRO T  77 "
+        pdb=" CD  PRO T  77 "
+      ideal   model   delta    sigma   weight residual
+     112.00    9.79  102.21 1.40e+00 5.10e-01 5.33e+03
+  angle pdb=" CA  PRO T 323 "
+        pdb=" N   PRO T 323 "
+        pdb=" CD  PRO T 323 "
+      ideal   model   delta    sigma   weight residual
+     112.00   16.76   95.24 1.40e+00 5.10e-01 4.63e+03
+  angle pdb=" CA  PRO S 128 "
+        pdb=" N   PRO S 128 "
+        pdb=" CD  PRO S 128 "
+      ideal   model   delta    sigma   weight residual
+     112.00   31.38   80.62 1.40e+00 5.10e-01 3.32e+03
+  ... (remaining 26722 not shown)
+
+  Histogram of dihedral angle deviations from ideal:
+        0.00 -    29.82: 10676
+       29.82 -    59.63: 831
+       59.63 -    89.45: 79
+       89.45 -   119.27: 15
+      119.27 -   149.09: 1
+  Dihedral angle restraints: 11602
+    sinusoidal: 4538
+      harmonic: 7064
+  Sorted by residual:
+  dihedral pdb=" N   SER T 413 "
+           pdb=" C   SER T 413 "
+           pdb=" CA  SER T 413 "
+           pdb=" CB  SER T 413 "
+      ideal   model   delta  harmonic     sigma   weight residual
+     122.80   12.72  110.08     0      2.50e+00 1.60e-01 1.94e+03
+  dihedral pdb=" C   SER T 413 "
+           pdb=" N   SER T 413 "
+           pdb=" CA  SER T 413 "
+           pdb=" CB  SER T 413 "
+      ideal   model   delta  harmonic     sigma   weight residual
+    -122.60  -13.20 -109.40     0      2.50e+00 1.60e-01 1.91e+03
+  dihedral pdb=" C   LYS K 338 "
+           pdb=" N   LYS K 338 "
+           pdb=" CA  LYS K 338 "
+           pdb=" CB  LYS K 338 "
+      ideal   model   delta  harmonic     sigma   weight residual
+    -122.60  -20.71 -101.89     0      2.50e+00 1.60e-01 1.66e+03
+  ... (remaining 11599 not shown)
+
+  Histogram of chiral volume deviations from ideal:
+       0.000 -    0.571: 2329
+       0.571 -    1.141: 492
+       1.141 -    1.712: 153
+       1.712 -    2.282: 63
+       2.282 -    2.853: 18
+  Chirality restraints: 3055
+  Sorted by residual:
+  chirality pdb=" CA  GLN A 489 "
+            pdb=" N   GLN A 489 "
+            pdb=" C   GLN A 489 "
+            pdb=" CB  GLN A 489 "
+    both_signs  ideal   model   delta    sigma   weight residual
+      False      2.51    5.36   -2.85 2.00e-01 2.50e+01 2.03e+02
+  chirality pdb=" CA  PHE A 456 "
+            pdb=" N   PHE A 456 "
+            pdb=" C   PHE A 456 "
+            pdb=" CB  PHE A 456 "
+    both_signs  ideal   model   delta    sigma   weight residual
+      False      2.51    5.30   -2.78 2.00e-01 2.50e+01 1.94e+02
+  chirality pdb=" CA  PHE S 513 "
+            pdb=" N   PHE S 513 "
+            pdb=" C   PHE S 513 "
+            pdb=" CB  PHE S 513 "
+    both_signs  ideal   model   delta    sigma   weight residual
+      False      2.51    5.02   -2.51 2.00e-01 2.50e+01 1.57e+02
+  ... (remaining 3052 not shown)
+
+  Planarity restraints: 3358
+  Sorted by residual:
+                                 delta    sigma   weight rms_deltas residual
+  plane pdb=" CA  GLU A 398 "    0.117 2.00e-02 2.50e+03   2.20e-01 4.84e+02
+        pdb=" C   GLU A 398 "    0.300 2.00e-02 2.50e+03
+        pdb=" O   GLU A 398 "   -0.244 2.00e-02 2.50e+03
+        pdb=" N   ALA A 399 "   -0.173 2.00e-02 2.50e+03
+                                 delta    sigma   weight rms_deltas residual
+  plane pdb=" CA  VAL S 367 "   -0.073 2.00e-02 2.50e+03   1.86e-01 3.47e+02
+        pdb=" C   VAL S 367 "    0.318 2.00e-02 2.50e+03
+        pdb=" O   VAL S 367 "   -0.154 2.00e-02 2.50e+03
+        pdb=" N   LEU S 368 "   -0.092 2.00e-02 2.50e+03
+                                 delta    sigma   weight rms_deltas residual
+  plane pdb=" CA  GLN K 321 "   -0.081 2.00e-02 2.50e+03   1.62e-01 2.64e+02
+        pdb=" C   GLN K 321 "    0.281 2.00e-02 2.50e+03
+        pdb=" O   GLN K 321 "   -0.088 2.00e-02 2.50e+03
+        pdb=" N   ASP K 322 "   -0.112 2.00e-02 2.50e+03
+  ... (remaining 3355 not shown)
+
+  Histogram of nonbonded interaction distances:
+        0.28 -     1.20: 80
+        1.20 -     2.13: 1049
+        2.13 -     3.05: 17609
+        3.05 -     3.98: 54980
+        3.98 -     4.90: 97950
+  Warning: very small nonbonded interaction distances.
+  Nonbonded interactions: 171668
+  Sorted by model distance:
+  nonbonded pdb=" NE  ARG K 138 "
+            pdb=" CG  LEU S 502 "
+     model   vdw
+     0.277 3.550
+  nonbonded pdb=" NZ  LYS A 388 "
+            pdb=" CA  ALA A 533 "
+     model   vdw
+     0.285 3.550
+  nonbonded pdb=" CD  GLU A 275 "
+            pdb=" CB  ASP A 276 "
+     model   vdw
+     0.311 3.670
+  nonbonded pdb=" CG  GLU A 275 "
+            pdb=" CA  ASP A 276 "
+     model   vdw
+     0.330 3.870
+  nonbonded pdb=" N   HIS A 397 "
+            pdb=" O   ALA A 399 "
+     model   vdw
+     0.346 2.520
+  ... (remaining 171663 not shown)
+
+  NOTE: a complete listing of the restraints can be obtained by requesting
+        output of .geo file.
+Find NCS groups from input model
+========== WARNING! ============
+
+  No NCS relation were found !!!
+
+================================
+
+Found NCS groups:
+  found none.
+Set up NCS constraints
+  No NCS constraints will be used in refinement.
+Set refine NCS operators
+Set scattering table
+  Set to: electron
+  Number of scattering types: 4
+    Type Number    sf(0)   Gaussians
+     S      81      5.16       5
+     C   12465      2.51       5
+     N    3154      2.21       5
+     O    3390      1.98       5
+    sf(0) = scattering factor at diffraction angle 0.
+Adjust number of macro_cycles
+  Number of macro_cycles: 5
+Reset NCS operators
+Extract rigid body selections
+Check and reset occupancies
+  Occupancies: min=1.00 max=1.00 mean=1.00
+Load rotamer database and sin/cos tables
+Set ADP refinement strategy
+  ADPs will be refined as individual isotropic
+Write .geo file
+Internal consistency checks
+Time:
+  Set random seed:                         0.000
+  Set model cs if undefined:               0.000
+  Decide on map wrapping:                  0.000
+  Normalize map: mean=0, sd=1:             1.250
+  Set stop_for_unknowns flag:              0.000
+  Assert model is a single copy model:     0.000
+  Construct map_model_manager:             0.010
+  Extract box with map and model:          3.740
+  Check model and map are aligned:         0.100
+  Convert atoms to be neutral:             0.050
+  Process input model:                     23.610
+  Find NCS groups from input model:        0.310
+  Set up NCS constraints:                  0.050
+  Set refine NCS operators:                0.000
+  Set scattering table:                    0.010
+  Adjust number of macro_cycles:           0.000
+  Reset NCS operators:                     0.000
+  Extract rigid body selections:           0.000
+  Check and reset occupancies:             0.000
+  Load rotamer database and sin/cos tables:1.510
+  Set ADP refinement strategy:             0.000
+  Write .geo file:                         0.000
+  Internal consistency checks:             0.000
+  Total:   30.640
+-------------------------------------------------------------------------------
+Set refinement monitor
+**********************
+-------------------------------------------------------------------------------
+Setup refinement engine
+***********************
+-------------------------------------------------------------------------------
+Overall statistics
+******************
+model-to-map fit, CC_mask: 0.6171
+moved from start:          0.0000
+
+Geometry Restraints Library: GeoStd + Monomer Library + CDL v1.2
+Deviations from Ideal Values - rmsd. rmsZ for bonds and angles.
+  Bond      :  0.088   2.506  19606  Z= 5.686
+  Angle     :  8.329 105.320  26727  Z= 5.411
+  Chirality :  0.603   2.853   3055
+  Planarity :  0.036   0.537   3358
+  Dihedral  : 17.225 149.086   7025
+  Min Nonbonded Distance : 0.277
+
+Molprobity Statistics.
+  All-atom Clashscore : 245.05
+  Ramachandran Plot:
+    Outliers :  9.35 %
+    Allowed  : 11.24 %
+    Favored  : 79.40 %
+  Rotamer Outliers :  7.47 %
+  Cbeta Deviations : 54.86 %
+  Peptide Plane:
+    Cis-proline     : 0.00 %
+    Cis-general     : 0.09 %
+    Twisted Proline : 2.22 %
+    Twisted General : 2.44 %
+
+Rama-Z (Ramachandran plot Z-score):
+Interpretation: bad |Rama-Z| > 3; suspicious 2 < |Rama-Z| < 3; good |Rama-Z| < 2.
+Scores for whole/helix/sheet/loop are scaled independently;
+therefore, the values are not related in a simple manner.
+  whole: -4.76 (0.14), residues: 2384
+  helix: -2.59 (0.13), residues: 999
+  sheet: -2.47 (0.25), residues: 376
+  loop : -4.00 (0.16), residues: 1009
+
+*********************** REFINEMENT MACRO_CYCLE 1 OF 5 *************************
+
+-------------------------------------------------------------------------------
+Update Rama plot phi/psi targets (oldfield only)
+************************************************
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+-------------------------------------------------------------------------------
+Re-set Ramachandran plot restraints
+***********************************
+  favored: oldfield
+  allowed: oldfield
+  outlier: oldfield
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+-------------------------------------------------------------------------------
+Optimize residue side-chains
+****************************
+-------------------------------------------------------------------------------
+Set rotamer restraints
+**********************
+Rotamers are restrained with sigma=5.00
+-------------------------------------------------------------------------------
+XYZ refinement
+**************
+Weight determination summary:
+   number of chunks: 237
+   random chunks:
+   chunk 200 optimal weight:    0.9990
+   chunk 179 optimal weight:    2.9990
+   chunk 99 optimal weight:    6.9990
+   chunk 61 optimal weight:    0.9980
+   chunk 121 optimal weight:    1.9990
+   chunk 95 optimal weight:    0.9980
+   chunk 185 optimal weight:    0.9990
+   chunk 71 optimal weight:    0.6980
+   chunk 112 optimal weight:    6.9990
+   chunk 138 optimal weight:    0.6980
+   chunk 215 optimal weight:    0.8980
+   overall best weight:    0.8580
+
+-------------------------------------------------------------------------------
+NQH flips
+*********
+Analyzing N/Q/H residues for possible flip corrections...
+
+Flipped N/Q/H residues before XYZ refinement:
+** A  21 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+** A 128 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+A 156 ASN
+A 158 GLN
+A 203 ASN
+A 213 GLN
+A 243 ASN
+A 260 GLN
+** A 273 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+A 303 HIS
+A 347 ASN
+A 395 GLN
+A 454 GLN
+** A 509 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+** K  45 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+K  93 ASN
+K 105 HIS
+K 130 ASN
+K 173 GLN
+K 207 GLN
+K 269 ASN
+** K 348 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+K 356 HIS
+K 357 GLN
+S 129 GLN
+** S 169 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+S 182 GLN
+S 317 ASN
+** S 327 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+S 386 GLN
+** T  61 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+T  80 GLN
+T 143 HIS
+T 160 ASN
+T 328 HIS
+T 339 GLN
+T 390 HIS
+T 399 GLN
+** T 436 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+T 491 ASN
+T 502 ASN
+U 118 GLN
+U 163 ASN
+** U 164 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+U 284 HIS
+** U 311 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+
+Total number of N/Q/H flips: 34
+
+-------------------------------------------------------------------------------
+Overall statistics
+******************
+model-to-map fit, CC_mask: 0.7083
+moved from start:          0.8154
+
+Geometry Restraints Library: GeoStd + Monomer Library + CDL v1.2
+Deviations from Ideal Values - rmsd. rmsZ for bonds and angles.
+  Bond      :  0.008   0.254  19606  Z= 0.499
+  Angle     :  1.649  58.961  26727  Z= 0.734
+  Chirality :  0.070   0.576   3055
+  Planarity :  0.020   0.263   3358
+  Dihedral  :  8.870  79.613   2608
+  Min Nonbonded Distance : 1.893
+
+Molprobity Statistics.
+  All-atom Clashscore : 33.42
+  Ramachandran Plot:
+    Outliers :  2.94 %
+    Allowed  :  8.31 %
+    Favored  : 88.76 %
+  Rotamer Outliers :  7.28 %
+  Cbeta Deviations :  0.18 %
+  Peptide Plane:
+    Cis-proline     : 0.00 %
+    Cis-general     : 0.18 %
+    Twisted Proline : 2.96 %
+    Twisted General : 1.06 %
+
+Rama-Z (Ramachandran plot Z-score):
+Interpretation: bad |Rama-Z| > 3; suspicious 2 < |Rama-Z| < 3; good |Rama-Z| < 2.
+Scores for whole/helix/sheet/loop are scaled independently;
+therefore, the values are not related in a simple manner.
+  whole: -2.56 (0.16), residues: 2384
+  helix: -0.57 (0.16), residues: 990
+  sheet: -1.53 (0.27), residues: 347
+  loop : -2.90 (0.17), residues: 1047
+
+*********************** REFINEMENT MACRO_CYCLE 2 OF 5 *************************
+
+-------------------------------------------------------------------------------
+Update Rama plot phi/psi targets (oldfield only)
+************************************************
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+-------------------------------------------------------------------------------
+Re-set Ramachandran plot restraints
+***********************************
+  favored: oldfield
+  allowed: oldfield
+  outlier: oldfield
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+-------------------------------------------------------------------------------
+Optimize residue side-chains
+****************************
+-------------------------------------------------------------------------------
+Set rotamer restraints
+**********************
+Rotamers are restrained with sigma=4.00
+-------------------------------------------------------------------------------
+XYZ refinement
+**************
+Weight determination summary:
+   number of chunks: 237
+   random chunks:
+   chunk 119 optimal weight:    0.3980
+   chunk 66 optimal weight:    0.3980
+   chunk 179 optimal weight:    0.2980
+   chunk 146 optimal weight:    1.9990
+   chunk 59 optimal weight:    2.9990
+   chunk 215 optimal weight:    0.7980
+   chunk 232 optimal weight:    1.9990
+   chunk 192 optimal weight:    0.3980
+   chunk 213 optimal weight:    0.9980
+   chunk 73 optimal weight:    0.6980
+   chunk 172 optimal weight:    1.9990
+   overall best weight:    0.4380
+
+-------------------------------------------------------------------------------
+NQH flips
+*********
+Analyzing N/Q/H residues for possible flip corrections...
+
+Flipped N/Q/H residues before XYZ refinement:
+** A 106 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+A 347 ASN
+** A 354 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+** A 355 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+** A 509 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+A 538 HIS
+** K 192 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+K 244 HIS
+K 348 GLN
+S 169 HIS
+** S 267 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+** S 346 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+S 386 GLN
+T  24 GLN
+** T 215 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+T 310 GLN
+** T 401 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+** T 436 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+U 163 ASN
+U 164 ASN
+U 192 GLN
+U 211 GLN
+U 311 HIS
+** U 395 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+
+Total number of N/Q/H flips: 13
+
+-------------------------------------------------------------------------------
+Overall statistics
+******************
+model-to-map fit, CC_mask: 0.7318
+moved from start:          0.9592
+
+Geometry Restraints Library: GeoStd + Monomer Library + CDL v1.2
+Deviations from Ideal Values - rmsd. rmsZ for bonds and angles.
+  Bond      :  0.005   0.127  19606  Z= 0.345
+  Angle     :  1.136  33.928  26727  Z= 0.514
+  Chirality :  0.053   0.356   3055
+  Planarity :  0.017   0.224   3358
+  Dihedral  :  7.614  75.728   2608
+  Min Nonbonded Distance : 2.038
+
+Molprobity Statistics.
+  All-atom Clashscore : 21.93
+  Ramachandran Plot:
+    Outliers :  2.10 %
+    Allowed  :  7.42 %
+    Favored  : 90.48 %
+  Rotamer Outliers :  3.13 %
+  Cbeta Deviations :  0.00 %
+  Peptide Plane:
+    Cis-proline     : 0.00 %
+    Cis-general     : 0.18 %
+    Twisted Proline : 6.67 %
+    Twisted General : 0.44 %
+
+Rama-Z (Ramachandran plot Z-score):
+Interpretation: bad |Rama-Z| > 3; suspicious 2 < |Rama-Z| < 3; good |Rama-Z| < 2.
+Scores for whole/helix/sheet/loop are scaled independently;
+therefore, the values are not related in a simple manner.
+  whole: -1.59 (0.17), residues: 2384
+  helix:  0.19 (0.16), residues: 982
+  sheet: -1.11 (0.27), residues: 356
+  loop : -2.26 (0.19), residues: 1046
+
+*********************** REFINEMENT MACRO_CYCLE 3 OF 5 *************************
+
+-------------------------------------------------------------------------------
+Update Rama plot phi/psi targets (oldfield only)
+************************************************
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+-------------------------------------------------------------------------------
+Re-set Ramachandran plot restraints
+***********************************
+  favored: oldfield
+  allowed: oldfield
+  outlier: oldfield
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
+-------------------------------------------------------------------------------
+Optimize residue side-chains
+****************************
+-------------------------------------------------------------------------------
+Set rotamer restraints
+**********************
+Rotamers are restrained with sigma=3.00
+-------------------------------------------------------------------------------
+XYZ refinement
+**************
+Weight determination summary:
+   number of chunks: 237
+   random chunks:
+   chunk 213 optimal weight:    1.9990
+   chunk 162 optimal weight:    1.9990
+   chunk 111 optimal weight:    2.9990
+   chunk 23 optimal weight:    1.9990
+   chunk 102 optimal weight:    0.9980
+   chunk 144 optimal weight:    1.9990
+   chunk 216 optimal weight:    0.5980
+   chunk 229 optimal weight:    1.9990
+   chunk 113 optimal weight:    2.9990
+   chunk 205 optimal weight:    1.9990
+   chunk 61 optimal weight:    0.5980
+   overall best weight:    1.2384
+
+-------------------------------------------------------------------------------
+NQH flips
+*********
+Analyzing N/Q/H residues for possible flip corrections...
+
+Flipped N/Q/H residues before XYZ refinement:
+** A 106 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+A 450 HIS
+** A 509 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+** K  44 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+K 227 GLN
+** S 169 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+** S 267 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+** T 215 GLN ** both conformations clash, **PLEASE CHECK MANUALLY**
+T 302 ASN
+T 395 GLN
+** T 401 HIS ** both conformations clash, **PLEASE CHECK MANUALLY**
+** T 436 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+T 491 ASN
+U 284 HIS
+U 311 HIS
+U 347 HIS
+** U 395 ASN ** both conformations clash, **PLEASE CHECK MANUALLY**
+
+Total number of N/Q/H flips: 8
+
+-------------------------------------------------------------------------------
+Overall statistics
+******************
+model-to-map fit, CC_mask: 0.7603
+moved from start:          1.0197
+
+Geometry Restraints Library: GeoStd + Monomer Library + CDL v1.2
+Deviations from Ideal Values - rmsd. rmsZ for bonds and angles.
+  Bond      :  0.006   0.108  19606  Z= 0.429
+  Angle     :  1.080  29.146  26727  Z= 0.500
+  Chirality :  0.053   0.401   3055
+  Planarity :  0.015   0.201   3358
+  Dihedral  :  7.257  72.734   2608
+  Min Nonbonded Distance : 2.068
+
+Molprobity Statistics.
+  All-atom Clashscore : 20.65
+  Ramachandran Plot:
+    Outliers :  1.85 %
+    Allowed  :  7.72 %
+    Favored  : 90.44 %
+  Rotamer Outliers :  2.84 %
+  Cbeta Deviations :  0.00 %
+  Peptide Plane:
+    Cis-proline     : 0.00 %
+    Cis-general     : 0.18 %
+    Twisted Proline : 7.41 %
+    Twisted General : 0.27 %
+
+Rama-Z (Ramachandran plot Z-score):
+Interpretation: bad |Rama-Z| > 3; suspicious 2 < |Rama-Z| < 3; good |Rama-Z| < 2.
+Scores for whole/helix/sheet/loop are scaled independently;
+therefore, the values are not related in a simple manner.
+  whole: -1.25 (0.17), residues: 2384
+  helix:  0.47 (0.16), residues: 976
+  sheet: -0.89 (0.27), residues: 359
+  loop : -2.08 (0.19), residues: 1049
+
+*********************** REFINEMENT MACRO_CYCLE 4 OF 5 *************************
+
+-------------------------------------------------------------------------------
+Update Rama plot phi/psi targets (oldfield only)
+************************************************
+
+  4768 Ramachandran restraints generated.
+    2384 Oldfield, 0 Emsley, 2384 emsley8k and 0 Phi/Psi/2.
