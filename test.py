@@ -48,57 +48,6 @@ def dssp(file_name):
 
     return dssp_res,model
     
-def get_ss_acc(acc_dict,f1,f2):
-    ss1,model1=dssp(f1)
-    ss2,model2=dssp(f2)
-    
-    coords_list1=[]
-    ss_list1=[]
-    key_list1=list(ss1.keys())
-    key_list1_new=[]
-    for key in key_list1:
-        try:
-            ss_list1.append(ss1[key][2])
-            cid=key[0]
-            res_num=key[1]
-            ca=model1[cid][res_num]['CA']
-            coords_list1.append(ca.get_coord())
-            key_list1_new.append(key)
-        except:
-            continue
-    key_list1=key_list1_new
-
-    key_list2_new=[]
-    coords_list2=[]
-    ss_list2=[]
-    key_list2=list(ss2.keys())
-    for key in key_list2:
-        try:
-            ss_list2.append(ss2[key][2])
-            cid=key[0]
-            res_num=key[1]
-            ca=model2[cid][res_num]['CA']
-            coords_list2.append(ca.get_coord())
-            key_list2_new.append(key)
-        except:
-            continue
-    key_list2=key_list2_new
-
-    dis_mat=calc_dis(coords_list1,coords_list2)
-    nearest=np.argmin(dis_mat,axis=1)
-    min_dis=np.min(dis_mat,axis=1)
-
-    for i,key in enumerate(key_list1):
-        if min_dis[i] < 3:
-            j=nearest[i]
-            ss=ss_list1[i]
-            score=1 if ss_list2[j]==ss else 0
-            if ss in acc_dict:
-                acc_dict[ss].append(score)
-            else:
-                acc_dict['-'].append(score)
-            acc_dict['all'].append(score)
-    return acc_dict
 
 def get_ss_recall(acc_dict,f1,f2):
     ss1,model1=dssp(f1)
@@ -155,17 +104,6 @@ def get_ss_recall(acc_dict,f1,f2):
         acc_dict['all'].append(score)
     return acc_dict
 
-def job2(z):
-    acc_dict={}
-    for key in ['G','H','I','T','E','B','S','-','all']:
-        acc_dict[key]=[]
-    try:
-        acc_dict=get_ss_acc(acc_dict,z[0],z[1])
-    except:
-        for key in ['G','H','I','T','E','B','S','-','all']:
-            acc_dict[key]=[0]
-    return acc_dict
-
 def job3(z):
     acc_dict={}
     for key in ['G','H','I','T','E','B','S','-','all']:
@@ -177,28 +115,6 @@ def job3(z):
             acc_dict[key]=[0]
     return acc_dict 
 
-def secondaryStructure(args,methods,df):
-    for method in methods:
-        data_list=[]
-        for emid,pdbid in zip(df['emid'],df['pdbid']):
-            models= get_model(pdbid,emid)
-            f1=models['PDB']
-            f2=models[method]
-            data_list.append((f1,f2))
-
-        pool=Pool(args.ncpu)
-        results=pool.map(job2, data_list)
-
-        acc_list=[]
-        for acc_dict in results:
-            for key in ['G','H','I','T','E','B','S','-']:
-                print('{}:{:.2f}'.format(key,np.mean(acc_dict[key])),end='\t')
-            print('all:{:.2f}'.format(np.mean(acc_dict['all'])))
-            acc_list.append(np.mean(acc_dict['all']))
-        df[f'SS accuracy by {method}']=acc_list
-        print(method,np.mean(acc_list))
-
-    return df
 
 def ss_recall(args,methods,df):
     for method in methods:
@@ -420,7 +336,7 @@ def phenix_chain_comp(args,methods,df):
     return df
 
 def seq_recall(args,methods,df):
-    ignore_pdbid=['7n06','7b03','7a4a','7nv0','7mxy','7n9z','7rak']
+    ignore_pdbid=['7n06','7b03','7a4a','7nv0','7mxy','7n9z'] #ModelAngelo failed to conform the map
 
     results={}
     for method in methods:
@@ -511,49 +427,6 @@ def phenix_real_space_refine(args,methods,df):
         results=pool.map(run_refine, cmd_list)
     return df
 
-def real_space_refine(args,dirs,df):
-    phenix_dir=os.path.dirname(args.phenix_act)
-    act_cmd=f'export PHENIX=\"{phenix_dir}\" && export PHENIX_VERSION=1.20.1-4487 && export DISPLAY=:0.0 && . $PHENIX/build/setpaths.sh'
-    cmd_list=[]
-    for dir in dirs:
-        for emid, resol in zip(df['emid'],df['resolution']):
-            for path in glob.glob(dir):
-                if str(emid) in path:
-                    em_path=os.path.abspath(os.path.join(args.map_dir,f'emd_{emid}.map.gz'))
-                    phenix_param=os.path.abspath(args.phenix_param)
-                    path=os.path.abspath(path)
-                    path_dir=os.path.dirname(path)
-                    print(emid)
-                    path_name=path.split('/')[-1]
-                    cmd=f'{act_cmd} && cd \'{path_dir}\'  && phenix.real_space_refine \'{path_name}\' {em_path} {phenix_param} resolution={resol}'
-                    cmd_list.append(cmd)
-    pool=Pool(args.ncpu)
-    results=pool.map(run_refine, cmd_list)
-    return True
-
-def cc_unmodeled(args,dirs,df):
-    phenix_dir=os.path.dirname(args.phenix_act)
-    act_cmd=f'export PHENIX=\"{phenix_dir}\" && export PHENIX_VERSION=1.20.1-4487 && export DISPLAY=:0.0 && . $PHENIX/build/setpaths.sh'
-    cmd_list=[]
-    for dir in dirs:
-        for emid, resol in zip(df['emid'],df['resolution']):
-            for path in glob.glob(dir):
-                if str(emid) in path:
-                    em_path=os.path.abspath(os.path.join(args.map_dir,f'emd_{emid}.map.gz'))
-                    phenix_param=os.path.abspath(args.phenix_param)
-                    path=os.path.abspath(path)
-                    path_dir=os.path.dirname(path)
-                    print(emid)
-                    path_name=path.split('/')[-1]
-                    cmd=f'{act_cmd} && cd temp_files && phenix.map_model_cc \'{path}\' {em_path} resolution={resol}'
-                    cmd_list.append(cmd)
-        pool=Pool(args.ncpu)
-        results=pool.map(get_cc, cmd_list)
-        for cmd,res in zip(cmd_list,results):
-            print(cmd)
-            print(res)
-    return True
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -581,84 +454,50 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
-    
-    if args.secondaryStructure:
-        methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_ss.csv'))
-        df=secondaryStructure(args,methods,df)
-        df.to_csv(os.path.join(args.results_dir,'results_ss.csv'),index=False)
+    df=pd.read_csv(args.test_csv)
 
     if args.ss_recall:
         methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_ss_recall.csv'))
         df=ss_recall(args,methods,df)
         df.to_csv(os.path.join(args.results_dir,'results_ss_recall.csv'),index=False)
     
     if args.phenix_ramalyze:
         methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo','PDB']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_ramalyze.csv'))
         df=phenix_rama_rota_clash(args,methods,df,'ramalyze')
         df.to_csv(os.path.join(args.results_dir,'results_ramalyze.csv'),index=False)
     
     if args.phenix_rotalyze:
         methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo','PDB']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_rotalyze.csv'))
         df=phenix_rama_rota_clash(args,methods,df,'rotalyze')
         df.to_csv(os.path.join(args.results_dir,'results_rotalyze.csv'),index=False)
 
     if args.phenix_clashscore:
         methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo','PDB']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_clashscore.csv'))
         df=phenix_rama_rota_clash(args,methods,df,'clashscore')
         df.to_csv(os.path.join(args.results_dir,'results_clashscore.csv'),index=False)
     
     if args.MMalign:
-        # methods=['EModelX(init)','EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_mmalign.csv'))
+        methods=['EModelX(init)','EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo']
         df=mmalign(args,methods,df)
         df.to_csv(os.path.join(args.results_dir,'results_mmalign.csv'),index=False)
 
     if args.phenix_cc:
-        # methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo','PDB']
-        # methods=['EModelX']
-        # df=pd.read_csv(os.path.join(args.results_dir,'results_cc.csv'))
-        # df=phenix_cc(args,methods,df)
-        # df.to_csv(os.path.join(args.results_dir,'results_cc.csv'),index=False)
-        df=pd.read_csv(args.test_csv)
-        dirs=['data/outputs/unmodeled/EModelX/*000.pdb','data/outputs/unmodeled/EModelX(+AF)/*000.pdb','data/outputs/unmodeled/EModelX(noseq)/*000.pdb']
-        cc_unmodeled(args,dirs,df)
+        methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo','PDB']
+        df=phenix_cc(args,methods,df)
+        df.to_csv(os.path.join(args.results_dir,'results_cc.csv'),index=False)
 
     if args.phenix_mt:
         methods=['EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo','PDB']
-        df=pd.read_csv(args.test_csv)
         df=phenix_mt(args,methods,df)
         df.to_csv(os.path.join(args.results_dir,'results_mt.csv'),index=False)
 
     if args.phenix_chain_comp:
         methods=['EModelX(init)','EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo']
-        methods=['EModelX']
-        df=pd.read_csv(os.path.join(args.results_dir,'results_chain_comp.csv'))
         df=phenix_chain_comp(args,methods,df)
         df.to_csv(os.path.join(args.results_dir,'results_chain_comp.csv'),index=False)
     
-
     if args.seq_recall:
-        df=pd.read_csv(args.test_csv)
         methods=['EModelX(init)','EModelX','EModelX(+AF)','Phenix','MAINMAST','DeepTracer','ModelAngelo']
         df=pd.read_csv(args.test_csv)
         df=seq_recall(args,methods,df)
-        df.to_csv(os.path.join(args.results_dir,'results_seq_recall2.csv'),index=False)
-
-    if args.phenix_refine:
-        # df=pd.read_csv(args.test_csv)
-        # methods=['DeepTracer','MAINMAST']
-        # phenix_real_space_refine(args,methods,df)
-        df=pd.read_csv(args.test_csv)
-        dirs=['data/outputs/unmodeled/EModelX/*EModelX.pdb','data/outputs/unmodeled/EModelX(+AF)/*EModelX(+AF).pdb','data/outputs/unmodeled/EModelX(noseq)/*seq_free.pdb']
-        real_space_refine(args,dirs,df)
+        df.to_csv(os.path.join(args.results_dir,'results_seq_recall.csv'),index=False)

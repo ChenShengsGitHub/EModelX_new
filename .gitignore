@@ -3,6 +3,7 @@ modules/phenix-1.20.1-4487
 data/outputs/*
 *.ipynb
 run_all.py
+test_bak.py
 test_single.py
 temp_files/*
 log_files/*
