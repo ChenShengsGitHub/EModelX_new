@@ -12,7 +12,9 @@ data/displays/figures
 data/displays/tables/*
 data/single_chains
 data/inputs/maps/*
+!data/inputs/maps/emd_32336.map.gz
 data/inputs/templates/*
+!data/inputs/templates/7W72*
 data/built_models/PDB
 data/built_models/alphafold
 data/built_models/Phenix
