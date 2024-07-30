@@ -14,7 +14,7 @@ Download NN model weights from <https://drive.google.com/file/d/13BKzEBfL0uubYgc
 For EModelX:   
 `python run.py --protocol=temp_free --EM_map=./inputs/maps/emd_32336.map.gz --fasta=./inputs/fastas/7w72 --output_dir=./data/outputs --run_pulchra --pulchra_path modules/pulchra304/src/pulchra`
 For EModelX(+AF):   
-`python run.py --protocol=temp_flex --EM_map=./inputs/maps/emd_32336.map.gz --fasta=./inputs/fastas/7w72.fasta --template_dir=./inputs/templates --output_dir=./data/outputs --run_pulchra --pulchra_path modules/pulchra304/src/pulchra`   
+`python run.py --protocol=temp_flex --EM_map=./inputs/maps/emd_32336.map.gz --fasta=./inputs/fastas/7w72 --template_dir=./inputs/templates --output_dir=./data/outputs --run_pulchra --pulchra_path modules/pulchra304/src/pulchra`   
 , where you can replace `--EM_map` with your target EM map   
 , and `--fasta` with your target fasta   
 , and `--template_dir`: directory of the template folder, only needed when --protocol == temp_flex   
@@ -29,7 +29,7 @@ Install phenix following <https://phenix-online.org/> into a directory, e.g. `mo
 For EModelX:   
 `python run.py --protocol=temp_free --EM_map=./inputs/maps/emd_32336.map.gz --fasta=./inputs/fastas/7w72 --output_dir=./data/outputs --run_pulchra --pulchra_path modules/pulchra304/src/pulchra --run_phenix --phenix_act modules/phenix-1.20.1-4487/phenix_env.sh`  
 For EModelX(+AF):   
-`python run.py --protocol=temp_flex --EM_map=./inputs/maps/emd_32336.map.gz --fasta=./inputs/fastas/7w72.fasta --template_dir=./inputs/templates --output_dir=./data/outputs --run_pulchra --pulchra_path modules/pulchra304/src/pulchra --run_phenix --phenix_act modules/phenix-1.20.1-4487/phenix_env.sh`
+`python run.py --protocol=temp_flex --EM_map=./inputs/maps/emd_32336.map.gz --fasta=./inputs/fastas/7w72 --template_dir=./inputs/templates --output_dir=./data/outputs --run_pulchra --pulchra_path modules/pulchra304/src/pulchra --run_phenix --phenix_act modules/phenix-1.20.1-4487/phenix_env.sh`
 
 ## Web Server
 EModelX's web server is accessible at <https://bio-web1.nscc-gz.cn/app/EModelX>   
