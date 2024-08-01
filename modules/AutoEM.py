@@ -1174,10 +1174,10 @@ class Solver:
             else:
                 seq = line.strip()
                 for i,c in enumerate(seq):
-                    if c not in utils.AA_abb:
+                    if c not in utils.AA_abb and c not in ['A','U','T','G','C']:
                         seq=seq[:i]+'A'+seq[i+1:]
                         print(f'warning!: {c} in protein seuqence would be treat as ALA')
-                if set(seq).issubset(set(['A','U','T','G','C'])):
+                if ('U' in seq) or set(seq).issubset(set(['A','U','T','G','C'])):
                     continue
                 chain_strs = head.split('|')[1].split(',')
                 for chain_str in chain_strs:
@@ -1200,8 +1200,6 @@ class Solver:
                 for k, coord in enumerate(self.CA_cands):
                     if AA in utils.AA_abb:
                         self.seq_cand_AA_mat[i,j,k] = self.CA_cands_AAProb[utils.AA_abb[AA],k]
-                    else:
-                        print(f'warning!: {AA} in protein seuqence would be treat as ALA')
         
         print('Check your fasta inputs, the fasta parser can only handle standard fasta inputs and only protein sequences would be parsed:')
         for i, fasta_name in enumerate(self.fastas):
