@@ -1173,6 +1173,10 @@ class Solver:
                     fasta_name = f'{split_fasta}_{n}'
             else:
                 seq = line.strip()
+                for i,c in enumerate(seq):
+                    if c not in utils.AA_abb:
+                        seq=seq[:i]+'A'+seq[i+1:]
+                        print(f'warning!: {c} in protein seuqence would be treat as ALA')
                 if set(seq).issubset(set(['A','U','T','G','C'])):
                     continue
                 chain_strs = head.split('|')[1].split(',')
