@@ -15,6 +15,7 @@ import superpose3d
 import subprocess
 import shlex
 import shutil
+import random
 from subprocess import run, DEVNULL
 
 
@@ -570,7 +571,9 @@ class Solver:
 
 
     def seqMapAligning(self):
-        self.checkSeq()
+        checkSeqRes=self.checkSeq()
+        if checkSeqRes != 'success':
+            return checkSeqRes
             
         if self.dynamic_config.protocol == 'temp_free':
             start_time=time.time()
@@ -1159,8 +1162,7 @@ class Solver:
             fasta_lines=open(self.dynamic_config.fasta).readlines()
         else:
             return 'fasta not found!'
-        
-        for line in fasta_lines:
+        for line_n, line in enumerate(fasta_lines):
             if len(line)<5:
                 continue
             if line[0]=='>':
@@ -1171,8 +1173,11 @@ class Solver:
                 while fasta_name in self.fastas:
                     n+=1
                     fasta_name = f'{split_fasta}_{n}'
+                seq=''
             else:
-                seq = line.strip()
+                seq=seq+line.strip()
+            
+            if line_n >=len(fasta_lines)-1 or fasta_lines[line_n+1].startswith('>'):
                 for i,c in enumerate(seq):
                     if c not in utils.AA_abb and c not in ['A','U','T','G','C']:
                         seq=seq[:i]+'A'+seq[i+1:]
@@ -1186,13 +1191,21 @@ class Solver:
                         self.fasta_list.append(fasta_name)
                         self.fastas[fasta_name] = Sequence(fasta_name, seq)
                     new_chain_id=chain_id
-                    while new_chain_id in self.fastas[fasta_name].chain_dict:
-                        new_chain_id = f'{chain_id}_{n}'
+                    if new_chain_id not in utils.chainID_list:
+                        new_chain_id = random.choice(utils.chainID_list)
+                    chain_n=0
+                    while new_chain_id in self.fastas[fasta_name].chain_dict and chain_n<100:
+                        chain_n+=1
+                        new_chain_id = random.choice(utils.chainID_list)
+                    if chain_id!=new_chain_id:
+                        print(f'Wrong chain id! use random chain id {new_chain_id}!')
                     chain_id=new_chain_id
                     self.fastas[fasta_name].chain_dict[chain_id]=Chain(chain_id, seq)
                     self.chain_id_list.append(chain_id)
                     self.max_seq_len=max(self.max_seq_len,len(seq))
                     self.ResNum +=len(seq)
+        if len(self.fastas)==0:
+            return 'Error in parse fasta, terminated!'
 
         self.seq_cand_AA_mat = np.zeros([len(self.fastas), self.max_seq_len, self.CA_cands.shape[0]]).astype(np.float)
         for i, fasta_name in enumerate(self.fastas):
@@ -1204,10 +1217,13 @@ class Solver:
         print('Check your fasta inputs, the fasta parser can only handle standard fasta inputs and only protein sequences would be parsed:')
         for i, fasta_name in enumerate(self.fastas):
             print(f'Your sequence {i+1} name: {fasta_name}',end=', ')
-            print(f'Chains that belong to this sequence',end=':')
+            print(f'Chains that belong to this sequence:')
             for chain_id in self.fastas[fasta_name].chain_dict:
                 print(chain_id,end=' ')
             print()
+            print('Your sequence: ')
+            print(self.fastas[fasta_name].sequence)
+        return 'success'
 
 
     def seqStructureAlign(self):
