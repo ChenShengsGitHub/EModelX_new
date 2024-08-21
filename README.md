@@ -3,7 +3,7 @@ EModelX is a method for automatic cryo-EM protein complex structure modeling.
 ![EModelX](data/displays/figure1.png)
 
 ## Colab
-EModelX can be run in Colab: [minor_example](https://colab.research.google.com/github/ChenShengsGitHub/EModelX_new/blob/main/minor_example.ipynb)  
+EModelX can be run in Colab: [Minimal Example](https://colab.research.google.com/github/ChenShengsGitHub/EModelX_new/blob/main/minor_example.ipynb)  
 
 
 ## Environment
