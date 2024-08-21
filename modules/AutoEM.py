@@ -190,7 +190,7 @@ def registerScoring(fasta_ix,fasta_name,seq_ix,radius):
             rmsd, R,T,_ = superpose3d.Superpose3D(this_coords,AF2_split)
             # if rmsd[0]<8:
             new_AF2 = np.dot(this_fasta.AF2_struct, R.T)+T
-            trans_AF2 = np.round(new_AF2).astype(np.int)
+            trans_AF2 = np.round(new_AF2).astype(int)
             trans_AF2 = trans_AF2[np.where(np.sum(trans_AF2>=0,axis=1)==3)]
             trans_AF2 = trans_AF2[np.where(np.sum(trans_AF2 < globalParam.CAProb.shape, axis=1) == 3)]
             CA_prob_sum = np.sum(globalParam.CAProb[trans_AF2[:, 0], trans_AF2[:, 1], trans_AF2[:, 2]])
@@ -1073,7 +1073,7 @@ class Solver:
                 labels_scores_avg.append(0)
         
         
-        val_mat=np.zeros_like(labels).astype(np.bool)
+        val_mat=np.zeros_like(labels).astype(bool)
         max_labels_score=np.max(labels_scores_avg)
         for label in range(labels.max()+1):
             if labels_scores_avg[label]>max_labels_score/2:
@@ -1122,7 +1122,7 @@ class Solver:
 
         self.CA_cands = np.array(new_cands)
         self.CA_cands_AAProb = np.array(new_AAs).T
-        round_cands= np.round(self.CA_cands).astype(np.int)
+        round_cands= np.round(self.CA_cands).astype(int)
         self.CA_cands_AA = self.AAPred[round_cands[:,0],round_cands[:,1],round_cands[:,2]]
 
         self.cand_self_dis = utils.calc_dis(self.CA_cands, self.CA_cands)
@@ -1142,7 +1142,7 @@ class Solver:
                 dis = max(0,abs(self.cand_self_dis[cand,neigh] - 3.8)-0.5)
                 dis_score = max(0, 1 - dis / 2)
                 for j in range(1,5):
-                    coord=np.round(j/5*self.CA_cands[neigh]+(5-j)/5*self.CA_cands[cand]).astype(np.int)
+                    coord=np.round(j/5*self.CA_cands[neigh]+(5-j)/5*self.CA_cands[cand]).astype(int)
                     BB_dens+=NNPred.BBProb[coord[0],coord[1],coord[2]]
                 self.neigh_mat[cand,neigh]=(dis_score+BB_dens/4)/2
         
@@ -1207,7 +1207,7 @@ class Solver:
         if len(self.fastas)==0:
             return 'Error in parse fasta, terminated!'
 
-        self.seq_cand_AA_mat = np.zeros([len(self.fastas), self.max_seq_len, self.CA_cands.shape[0]]).astype(np.float)
+        self.seq_cand_AA_mat = np.zeros([len(self.fastas), self.max_seq_len, self.CA_cands.shape[0]]).astype(float)
         for i, fasta_name in enumerate(self.fastas):
             for j, AA in enumerate(self.fastas[fasta_name].sequence):
                 for k, coord in enumerate(self.CA_cands):
@@ -1647,7 +1647,7 @@ class Solver:
             this_seq= [_ for _ in range(left_seq,right_seq+1)]
             rmsd,R,T,_ = superpose3d.Superpose3D(self.CA_cands[this_trace],this_fasta.AF2_struct[this_seq])
             trans_AF2=np.dot(this_fasta.AF2_struct, R.T)+T
-            trans_AF2 = np.round(trans_AF2).astype(np.int)
+            trans_AF2 = np.round(trans_AF2).astype(int)
             trans_AF2 = trans_AF2[np.where(np.sum(trans_AF2>=0,axis=1)==3)]
             trans_AF2 = trans_AF2[np.where(np.sum(trans_AF2 < self.CAProb.shape, axis=1) == 3)]
             CA_prob_sum = np.sum(self.CAProb[trans_AF2[:, 0], trans_AF2[:, 1], trans_AF2[:, 2]])
