@@ -23,7 +23,7 @@ For EModelX(+AF):
 , and `--fasta` with your target fasta   
 , and `--template_dir`: directory of the template folder, only needed when --protocol == temp_flex   
 , and `--output_dir`: the output directory for modeling results  
-Notice: If you want to run EModelX(+AF), please place your AlphaFold-predicted single-chain structures in your `--template_dir`， the format should follow our example in ./inputs/templates.  
+Notice: If you want to run EModelX(+AF), please place your AlphaFold-predicted single-chain structures in your `--template_dir`， the format should follow our example in ./inputs/templates. More detailedly, you need to prepare a directory with a consistent name matching the header lines in the fasta file, and the PDB file needed to be renamed as ranked_0.pdb (which is not user-friendly enough and we are trying to update a more user-friendly protocol to process alphafold inputs recently).    
 
 ## Postprocess
 ### Environment
