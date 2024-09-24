@@ -38,7 +38,7 @@ class Sequence:
         self.trace_scores = []
         self.connect_ign=[]
         self.AF2_raw_structs=None
-        self.AF2_structs=None
+        self.AF2_struct=None
         self.chain_cand_mat=None
 
 
@@ -327,6 +327,43 @@ def run_pulchra(dir,pulchar_path,pdbfile,emid,pdbid):
     return all_atom_model
 
 
+def get_seq(inp):
+    seq_obj,chain_strs,protocol,afdb_allow_seq_id,template_dir,download_af,pdbParser=inp
+    un_exist=False
+    fasta_name=seq_obj.fasta_name
+    if protocol=='temp_flex':
+        AF2_path=os.path.join(template_dir, fasta_name,'ranked_0.pdb')
+        if os.path.exists(AF2_path) or download_af:
+            sub_seq_range=None
+            if download_af:
+                sub_seq,sub_seq_range=utils.get_af_pdb_by_seq(seq_obj.sequence,fasta_name,AF2_path,afdb_allow_seq_id)
+                
+            if os.path.exists(AF2_path):
+                af2_s = pdbParser.get_structure(fasta_name, AF2_path)
+                seq_obj.AF2_raw_structs = af2_s
+                AF2_struct=[]
+                af_seq=''
+                for residue in af2_s[0]['A']:
+                    if sub_seq_range and not (sub_seq_range[0]< residue.id[1] <=sub_seq_range[1]):
+                        continue
+                    if 'CA' in residue:
+                        AF2_struct.append(residue['CA'].get_coord())
+                        if residue.get_resname() in utils.AA2abb:
+                            af_seq+=utils.AA2abb[residue.get_resname()]
+                        else:
+                            af_seq+='A'
+                            print(f'Not standard Residue {residue.get_resname()} in AlphaFold structure {fasta_name}! Change it to ALA!')
+                print(f'Replacing {fasta_name}:\n\t\"{seq_obj.sequence}\"\nas\t\"{af_seq}\"')
+                seq_obj.AF2_struct = np.array(AF2_struct)
+                seq_obj.sequence = af_seq
+            else:
+                un_exist=True
+        else:
+            un_exist=True
+    
+    
+    return seq_obj,chain_strs,un_exist
+
 class Solver:
     def __init__(self,dynamic_config):
         # init
@@ -382,6 +419,15 @@ class Solver:
     
 
     def run(self,BB_model,CA_model,AA_model):
+        if self.dynamic_config.protocol in ['temp_free','temp_flex']:
+            checkSeqRes=self.checkSeq()
+            if checkSeqRes != 'success':
+                return checkSeqRes
+            # if self.dynamic_config.protocol== 'temp_flex':
+            #     check_result = self.checkTemp()
+            #     if check_result:
+            #         return 'templates not found for {}, Check your directory of templates!'.format(check_result)
+            
         self.nnProcess(BB_model,CA_model,AA_model)
         start_time=time.time()
         print('fragModeling...')
@@ -391,6 +437,7 @@ class Solver:
 
         
         if self.dynamic_config.protocol in ['temp_free','temp_flex']:
+            
             run_result=self.seqMapAligning()
             if run_result != 'success':
                 print(run_result)
@@ -571,10 +618,7 @@ class Solver:
 
 
     def seqMapAligning(self):
-        checkSeqRes=self.checkSeq()
-        if checkSeqRes != 'success':
-            return checkSeqRes
-            
+        self.prepareSeq4Align()
         if self.dynamic_config.protocol == 'temp_free':
             start_time=time.time()
             print('seqStructureAlign...')
@@ -583,9 +627,6 @@ class Solver:
             self.time_cost['seqStructureAlign']=time.time()-start_time
             print('seqStructureAlign finished in {} seconds'.format(round(self.time_cost['seqStructureAlign'])))
         elif self.dynamic_config.protocol== 'temp_flex':
-            check_result = self.checkTemp()
-            if check_result:
-                return 'templates not found for {}, Check your directory of templates!'.format(check_result)
             start_time=time.time()
             print('seqStructAlignWithTemplate...')
             self.seqStructAlignWithTemplate()
@@ -1162,6 +1203,13 @@ class Solver:
             fasta_lines=open(self.dynamic_config.fasta).readlines()
         else:
             return 'fasta not found!'
+        un_exist_list=[]
+        if self.dynamic_config.protocol=='temp_flex':
+            print('You are using EModelX(+AF).')
+            print('We will replace your fasta sequence as AlphaFold sequence (or the most similar one in AFDB).')
+        
+        input_list=[]
+        fasta_set=set()
         for line_n, line in enumerate(fasta_lines):
             if len(line)<5:
                 continue
@@ -1170,9 +1218,10 @@ class Solver:
                 split_fasta=line[1:].split('|')[0]
                 fasta_name=split_fasta
                 n=0
-                while fasta_name in self.fastas:
+                while fasta_name in fasta_set:
                     n+=1
                     fasta_name = f'{split_fasta}_{n}'
+                fasta_set.add(fasta_name)
                 seq=''
             else:
                 seq=seq+line.strip()
@@ -1184,12 +1233,25 @@ class Solver:
                         print(f'warning!: {c} in protein seuqence would be treat as ALA')
                 if ('U' in seq) or set(seq).issubset(set(['A','U','T','G','C'])):
                     continue
+                seq_obj=Sequence(fasta_name, seq)
                 chain_strs = head.split('|')[1].split(',')
+                input_list.append((seq_obj,chain_strs,self.dynamic_config.protocol,self.dynamic_config.afdb_allow_seq_id,self.dynamic_config.template_dir,self.dynamic_config.download_afdb,self.pdbParser))
+            
+        if input_list:
+            pool = Pool(min(len(input_list),self.dynamic_config.mul_proc_num))
+            results = pool.map(get_seq, input_list)
+
+            for res in results:
+                seq_obj,chain_strs,un_exist=res
+                fasta_name=seq_obj.fasta_name
+                if un_exist:
+                    un_exist_list.append(fasta_name)
+
                 for chain_str in chain_strs:
                     chain_id = chain_str.split(' ')[-1].split(']')[0]
                     if fasta_name not in self.fastas:
                         self.fasta_list.append(fasta_name)
-                        self.fastas[fasta_name] = Sequence(fasta_name, seq)
+                        self.fastas[fasta_name] = seq_obj
                     new_chain_id=chain_id
                     if new_chain_id not in utils.chainID_list:
                         new_chain_id = random.choice(utils.chainID_list)
@@ -1200,19 +1262,16 @@ class Solver:
                     if chain_id!=new_chain_id:
                         print(f'Wrong chain id! use random chain id {new_chain_id}!')
                     chain_id=new_chain_id
-                    self.fastas[fasta_name].chain_dict[chain_id]=Chain(chain_id, seq)
+                    self.fastas[fasta_name].chain_dict[chain_id]=Chain(chain_id, seq_obj.sequence)
                     self.chain_id_list.append(chain_id)
-                    self.max_seq_len=max(self.max_seq_len,len(seq))
-                    self.ResNum +=len(seq)
+                    self.max_seq_len=max(self.max_seq_len,len(seq_obj.sequence))
+                    self.ResNum +=len(seq_obj.sequence)
+
+
         if len(self.fastas)==0:
             return 'Error in parse fasta, terminated!'
-
-        self.seq_cand_AA_mat = np.zeros([len(self.fastas), self.max_seq_len, self.CA_cands.shape[0]]).astype(float)
-        for i, fasta_name in enumerate(self.fastas):
-            for j, AA in enumerate(self.fastas[fasta_name].sequence):
-                for k, coord in enumerate(self.CA_cands):
-                    if AA in utils.AA_abb:
-                        self.seq_cand_AA_mat[i,j,k] = self.CA_cands_AAProb[utils.AA_abb[AA],k]
+        if un_exist_list:
+            return 'Templates not found for {}, Check your directory of templates!'.format(un_exist_list)
         
         print('Check your fasta inputs, the fasta parser can only handle standard fasta inputs and only protein sequences would be parsed:')
         for i, fasta_name in enumerate(self.fastas):
@@ -1224,6 +1283,17 @@ class Solver:
             print('Your sequence: ')
             print(self.fastas[fasta_name].sequence)
         return 'success'
+
+
+    def prepareSeq4Align(self):
+        self.seq_cand_AA_mat = np.zeros([len(self.fastas), self.max_seq_len, self.CA_cands.shape[0]]).astype(float)
+        for i, fasta_name in enumerate(self.fastas):
+            for j, AA in enumerate(self.fastas[fasta_name].sequence):
+                for k, coord in enumerate(self.CA_cands):
+                    if AA in utils.AA_abb:
+                        self.seq_cand_AA_mat[i,j,k] = self.CA_cands_AAProb[utils.AA_abb[AA],k]
+        
+        
 
 
     def seqStructureAlign(self):
@@ -1384,21 +1454,38 @@ class Solver:
             return [[], [], []]
 
 
-    def checkTemp(self):#如果这里报错就是template文件夹路径问题，请参考fasta文件命名，参考inputs文件夹里的example
-        un_exist_list=[]
-        for fasta_name in self.fastas:
-            AF2_path=os.path.join(self.dynamic_config.template_dir, fasta_name,'ranked_0.pdb')
-            if os.path.exists(AF2_path):
-                af2_s = self.pdbParser.get_structure(fasta_name, AF2_path)
-                self.fastas[fasta_name].AF2_raw_structs = af2_s
-                AF2_struct=[]
-                for residue in af2_s[0]['A']:
-                    if 'CA' in residue:
-                        AF2_struct.append(residue['CA'].get_coord())
-                self.fastas[fasta_name].AF2_struct = np.array(AF2_struct)
-            else:
-                un_exist_list.append(fasta_name)
-        return un_exist_list
+    # def checkTemp(self,download=True):#如果这里报错就是template文件夹路径问题，请参考fasta文件命名，参考inputs文件夹里的example
+    #     un_exist_list=[]
+    #     for fasta_name in self.fastas:
+    #         AF2_path=os.path.join(self.dynamic_config.template_dir, fasta_name,'ranked_0.pdb')
+    #         if os.path.exists(AF2_path) or download:
+    #             if not os.path.exists(AF2_path):
+    #                 if not un_exist_list:
+    #                     utils.get_af_pdb_by_seq(self.fastas[fasta_name].sequence,AF2_path,self.dynamic_config.afdb_allow_seq_id)
+                    
+    #             if os.path.exists(AF2_path):
+    #                 af2_s = self.pdbParser.get_structure(fasta_name, AF2_path)
+    #                 self.fastas[fasta_name].AF2_raw_structs = af2_s
+    #                 AF2_struct=[]
+    #                 af_seq=''
+    #                 for residue in af2_s[0]['A']:
+    #                     if 'CA' in residue:
+    #                         AF2_struct.append(residue['CA'].get_coord())
+    #                         if residue.get_resname() in utils.AA2abb:
+    #                             af_seq+=utils.AA2abb[residue.get_resname()]
+    #                         else:
+    #                             af_seq+='A'
+    #                             print(f'Not standard Residue {residue.get_resname()} in AlphaFold structure {fasta_name}! Change it to ALA!')
+    #                 print('You are using EModelX(+AF), we will replace the sequence in your fasta as ')
+    #                 print('Replacing fasta sequences as the given AlphaFold structure (or the most similar one in AFDB)')
+    #                 print(f'Replacing {fasta_name}:\n\t\"{self.fastas[fasta_name].sequence}\"\n\tas\n\t\"{af_seq}\"')
+    #                 self.fastas[fasta_name].AF2_struct = np.array(AF2_struct)
+    #                 self.fastas[fasta_name].sequence = af_seq
+    #             else:
+    #                 un_exist_list.append(fasta_name)
+    #         else:
+    #             un_exist_list.append(fasta_name)
+    #     return un_exist_list
 
 
     def seqStructAlignWithTemplate(self):

@@ -55,6 +55,7 @@ if __name__ == '__main__':
     parser.add_argument('--template_dir', type=str, default='./inputs/templates', help='dir of template folder, required when --protocol is temp_flex, path format for different chain please reference to ./inputs/templates')
     
     parser.add_argument('--run_pulchra', action='store_true', help='whether to run pulchra for all_atom construction')
+    parser.add_argument('--download_afdb', action='store_true', help='whether to download_afdb')
     parser.add_argument('--pulchra_path',type=str, help='directory of pulchra, e.g.: modules/pulchra304/src/pulchra')
 
     parser.add_argument('--run_phenix', action='store_true', help='whether to run phenix.real_space_refine')
@@ -79,6 +80,7 @@ if __name__ == '__main__':
     parser.add_argument('--score_thrh', type=float, default=2, help='set as default')
     parser.add_argument('--gap_len', type=int, default=3, help='set as default')
     parser.add_argument('--struct_len', type=int, default=5, help='set as default')
+    parser.add_argument('--afdb_allow_seq_id', type=float, default=0.95, help='set as default')
     
     dynamic_config = parser.parse_args()
 

@@ -1,10 +1,11 @@
 import numpy as np
 from skimage import transform
 import numpy as np
-import numpy as np
 import mrcfile
 import os
-import pdb
+import requests
+import time
+import random
 
 
 chainID_list = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']
@@ -14,6 +15,7 @@ AA_T = {AA_types[k]-1: k for k in AA_types}
 AA_abb_T = {0:"A",1:"C",2:"D",3:"E",4:"F",5:"G",6:"H",7:"I",8:"K",9:"L",10:"M",11:"N",12:"P",13:"Q",14:"R",15:"S",16:"T",17:"V",18:"W",19:"Y"}
 AA_abb = {AA_abb_T[k]:k for k in AA_abb_T}
 abb2AA = {"A":"ALA","C":'CYS',"D":'ASP',"E":'GLU',"F":'PHE',"G":'GLY',"H":"HIS","I":"ILE","K":"LYS","L":"LEU","M":"MET","N":"ASN","P":"PRO","Q":"GLN","R":"ARG","S":"SER","T":"THR","V":"VAL","W":"TRP","Y":"TYR"}
+AA2abb = {abb2AA[k]:k for k in abb2AA}
 MMalign='~/projects/MMalign/MMalign' # your MMalign path
 TMalign='~/projects/MMalign/TMalign' # your TMalign path
 
@@ -95,6 +97,7 @@ def processEMData(EMmap,norm=True):
     em_data, offset = reshape(em_data, offset, pixel_size)
     if norm:
         em_data, offset = normalize(em_data, offset)
+    # offset=[offset[0]+float(EMmap.header.origin.x), offset[1]+float(EMmap.header.origin.y),offset[2]+float(EMmap.header.origin.z)]
     return em_data, offset
 
 
@@ -158,3 +161,81 @@ def parseTMscore(gt_pdb,pred_pdb):
     except:
         pass
     return ResNum_pdb,ResNum_pred,Align_len,MM1,MM2,RMSD,SeqID
+
+
+def get_afdb_id_by_seq(seq,allow_seq_id=0.95):
+    if len(seq)<10:
+        return f'Error! Sequence len {len(seq)} small than 10!'
+    jsonResponse={'message': 'Search in progress, please try after sometime!'}
+    time_start=time.time()
+    try_num=0
+    error=False
+    random_sleep=60
+    
+    while 'SeqId' not in jsonResponse and time.time()-time_start<1000:
+        try:
+            random_rows=int(round(random.random()*9))+1
+            response = requests.get(f'https://alphafold.ebi.ac.uk/api/search?q={seq}&type=sequence&start=0&rows={random_rows}')
+            response.raise_for_status()
+            # access JSOn content
+            jsonResponse = response.json()
+            if 'docs' in jsonResponse:
+                if 'entryId' in jsonResponse['docs'][0]:
+                    if 'hsps'  in jsonResponse['docs'][0] and 'uniprotSequence' in jsonResponse['docs'][0]:
+                        if 'identity' in jsonResponse['docs'][0]['hsps'] and 'subject' in jsonResponse['docs'][0]['hsps']:
+                            seq_id=jsonResponse['docs'][0]['hsps']['identity']/len(seq)
+                            af_id=jsonResponse['docs'][0]['entryId']
+                            af_all_seq=jsonResponse['docs'][0]['uniprotSequence']
+                            af_sub_seq=jsonResponse['docs'][0]['hsps']['subject'].replace('-','')
+                            ind_start=af_all_seq.find(af_sub_seq)
+                            ind_end=ind_start+len(af_sub_seq)
+                            if ind_start==-1:
+                                return 'Error! Can\'t find subject sequence in uniprotSequence!'
+
+                            if seq_id>=allow_seq_id:
+                                return {'AFDB entryId': af_id, 'Sequence Identity': seq_id,'AFDB subject sequence': af_sub_seq, 'AFDB subject sequence range': (ind_start,ind_end)}
+                            else:
+                                return f'Failed! AFID {af_id} with the max Seq Identity {seq_id} < {allow_seq_id}!'
+                return f'Failed! Seq \n\t\"{seq}\"\n\tis not found in AFDB'
+            
+            if try_num>0:
+                random_sleep=round(random.random()*90)+30
+                print('Retry {:d} time'.format(try_num))
+            try_num+=1
+            print('Please waiting for {:d}s....'.format(random_sleep))
+            time.sleep(random_sleep)
+            print('In total {:d}s have past'.format(round(time.time()-time_start)))
+            error=False
+        except Exception as ex:
+            print('Error!: ',ex)
+            if error:
+                return 'Failed! Continuous error'
+            error=True
+            try_num+=1
+            print('Retry {:d} time'.format(try_num))
+            print(f'Continuous error would be recognized as search failed')
+
+            
+    return 'Failed! Waiting for sequence search in AFDB over 1000s!'
+
+def get_af_pdb_by_seq(seq,fasta_name,save_path,allow_seq_id):
+    print(f'Your AFDB search is currently underway for {fasta_name}:\t\"{seq}\"')
+    print('The process typically requires between 5 to 10 minutes to complete when no same search hits before.')
+    print('Waiting over 1000s would be recognized as search failed')
+    res=get_afdb_id_by_seq(seq,allow_seq_id)
+    print(res)
+    if not isinstance(res,dict) or 'AFDB entryId' not in res:
+        return ''
+    
+    try:
+        os.makedirs(os.path.dirname(save_path))
+    except:
+        pass
+    af_id=res['AFDB entryId']
+    af_sub_seq=res['AFDB subject sequence']
+    af_sub_seq_range=res['AFDB subject sequence range']
+    os.system(f'wget https://alphafold.ebi.ac.uk/files/{af_id}-model_v4.pdb -O {save_path}')
+    if os.path.exists(save_path):
+        return af_sub_seq, af_sub_seq_range
+    else:
+        return ''
