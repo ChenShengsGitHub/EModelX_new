@@ -15,12 +15,12 @@ Download NN model weights from <https://drive.google.com/file/d/13BKzEBfL0uubYgc
 
 ## If you don't have standard fasta file  
 Run:  
-`python get_fasta.py gen_fasta_path fasta_name_1||chain_num_1||sequence_1 fasta_name_2||chain_num_2||sequence_2 ...||...||... fasta_name_n||chain_num_n||sequence_n`  
-, where `gen_fasta_path` is the path to save the generated fasta file (e.g. data/inputs/fastas/7w72)    
+`python get_fasta.py gen_fasta_path fasta_name_1;chain_num_1;sequence_1 fasta_name_2;chain_num_2;sequence_2 ...;...;... fasta_name_n;chain_num_n;sequence_n`  
+, where `gen_fasta_path` is the path to save the generated fasta file (e.g. `data/inputs/fastas/7w72`)    
 , `chain_num_n` should be an integer that indicates how many chains belong to this sequence    
 , and `sequence_n` should be a protein sequence    
 , and quotation marks `'` or `"` would be ignored    
-, and make sure `||`s are only used as separtion marks.    
+, and make sure `;`s are only used as separtion marks.    
 
 
 ## Minimal Example: Protein complex structure modeling for a cryo-EM map
