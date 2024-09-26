@@ -6,7 +6,7 @@ gen_fasta_path=sys.argv[1]
 with open(gen_fasta_path,'w') as w:
     for arg in sys.argv[2:]:
         try:
-            arg.args.replace('\'','').replace('\"','')
+            arg.replace('\'','').replace('\"','')
             seq_s=arg.split('||')
             assert len(seq_s)==3
             fasta_name,chain_num,sequence=seq_s[0],seq_s[1],seq_s[2]
