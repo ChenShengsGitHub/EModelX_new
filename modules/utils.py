@@ -225,7 +225,8 @@ def get_af_pdb_by_seq(seq,fasta_name,save_path,allow_seq_id):
     res=get_afdb_id_by_seq(seq,allow_seq_id)
     print(res)
     if not isinstance(res,dict) or 'AFDB entryId' not in res:
-        return ''
+        print(f'{fasta_name} not found in AFDB!')
+        return '',None
     
     try:
         os.makedirs(os.path.dirname(save_path))
@@ -238,4 +239,5 @@ def get_af_pdb_by_seq(seq,fasta_name,save_path,allow_seq_id):
     if os.path.exists(save_path):
         return af_sub_seq, af_sub_seq_range
     else:
-        return ''
+        print(f'{fasta_name} download from AFDB failed!')
+        return '',None
