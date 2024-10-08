@@ -1234,7 +1234,11 @@ class Solver:
                 if ('U' in seq) or set(seq).issubset(set(['A','U','T','G','C'])):
                     continue
                 seq_obj=Sequence(fasta_name, seq)
-                chain_strs = head.split('|')[1].split(',')
+                try:
+                    chain_strs = head.split('|')[1].split(',')
+                except:
+                    chain_strs=['A','B','C']
+                    print(f'WARNING!!! Parse chain number error!!! Chain number will be set as 3 for {fasta_name}')
                 input_list.append((seq_obj,chain_strs,self.dynamic_config.protocol,self.dynamic_config.afdb_allow_seq_id,self.dynamic_config.template_dir,self.dynamic_config.download_afdb,self.pdbParser))
             
         if input_list:
@@ -1248,7 +1252,11 @@ class Solver:
                     un_exist_list.append(fasta_name)
 
                 for chain_str in chain_strs:
-                    chain_id = chain_str.split(' ')[-1].split(']')[0]
+                    try:
+                        chain_id = chain_str.split(' ')[-1].split(']')[0]
+                    except:
+                        chain_id='A'
+                        print(f'WARNING!!! Parse chain ID error!!! Chain ID will be set as A for {chain_str}')
                     if fasta_name not in self.fastas:
                         self.fasta_list.append(fasta_name)
                         self.fastas[fasta_name] = seq_obj
