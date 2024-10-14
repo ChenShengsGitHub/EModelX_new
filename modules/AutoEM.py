@@ -470,6 +470,7 @@ class Solver:
                 print('phenix_refine finished in {} seconds'.format(round(self.time_cost['phenix_refine'])))
         
         self.time_record()
+        return 'success'
             
 
     def nnProcess(self,BB_model,CA_model,AA_model):

@@ -12,39 +12,39 @@ np.set_printoptions(threshold=np.inf,suppress=True,precision=2)
 def run_emodelx(dynamic_config,BB_model,CA_model,AA_model):
     if dynamic_config.protocol not in ['temp_free','temp_flex','seq_free']:
         print('Wrong protocol! protocol should be [temp_free,temp_flex,seq_free]')
-        return
+        return 'Wrong protocol! protocol should be [temp_free,temp_flex,seq_free]'
     if dynamic_config.protocol in ['temp_free','temp_flex']:
         if not dynamic_config.fasta:
             print('--fasta is required when protocol is not seq_free')
-            return
+            return '--fasta is required when protocol is not seq_free'
         elif not os.path.exists(dynamic_config.fasta):
             print('--fasta: path not exisit!')
-            return
+            return '--fasta: path not exisit!'
         if dynamic_config.protocol =='temp_flex':
             if not dynamic_config.template_dir:
                 print('--template_dir is required when protocol is not seq_free')
-                return
+                return '--template_dir is required when protocol is not seq_free'
             elif not os.path.exists(dynamic_config.template_dir):
                 print('--template_dir: path not exisit!')
-                return
+                return '--template_dir: path not exisit!'
     
     if dynamic_config.run_phenix:
         dynamic_config.run_pulchra=True
         if not dynamic_config.resolution:
             print('--resolution is required for run.phenix_real_space_refine')
-            return
+            return '--resolution is required for run.phenix_real_space_refine'
         if not dynamic_config.phenix_act:
             print('--phenix_act is required for run.phenix_real_space_refine')
-            return
+            return '--phenix_act is required for run.phenix_real_space_refine'
         
     if dynamic_config.run_pulchra:
         if not dynamic_config.pulchra_path:
             print('--pulchra_path is required for run.phenix_real_space_refine')
-            return
+            return '--pulchra_path is required for run.phenix_real_space_refine'
 
 
     AutoEM_solver = Solver(dynamic_config)
-    AutoEM_solver.run(BB_model,CA_model,AA_model)
+    return AutoEM_solver.run(BB_model,CA_model,AA_model)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -95,4 +95,6 @@ if __name__ == '__main__':
     CA_model.eval()
     AA_model.eval()
 
-    run_emodelx(dynamic_config,BB_model,CA_model,AA_model)
+    result = run_emodelx(dynamic_config,BB_model,CA_model,AA_model)
+    if result!='success':
+        raise Exception(result)
