@@ -80,7 +80,7 @@ if __name__ == '__main__':
     parser.add_argument('--score_thrh', type=float, default=2, help='set as default')
     parser.add_argument('--gap_len', type=int, default=3, help='set as default')
     parser.add_argument('--struct_len', type=int, default=5, help='set as default')
-    parser.add_argument('--afdb_allow_seq_id', type=float, default=0.95, help='set as default')
+    parser.add_argument('--afdb_allow_seq_id', type=float, default=0.6, help='set as default')
     
     dynamic_config = parser.parse_args()
 
