@@ -1214,9 +1214,7 @@ class Solver:
         seq=''
         for line_n, line in enumerate(fasta_lines):
             line=line.strip()
-            if len(line)<2:
-                continue
-            elif line[0]=='>':
+            if line.startswith('>'):
                 head = line
                 split_fasta=line[1:].split('|')[0]
                 fasta_name=split_fasta
@@ -1226,12 +1224,12 @@ class Solver:
                     fasta_name = f'{split_fasta}_{n}'
                 fasta_set.add(fasta_name)
                 seq=''
-            elif len(line)<10:
-                continue
             else:
                 seq=seq+line
             
             if line_n >=len(fasta_lines)-1 or fasta_lines[line_n+1].startswith('>'):
+                if len(line)<10:
+                    continue
                 for i,c in enumerate(seq):
                     if c not in utils.AA_abb and c not in ['A','U','T','G','C']:
                         seq=seq[:i]+'A'+seq[i+1:]
@@ -1242,8 +1240,9 @@ class Solver:
                 try:
                     chain_strs = head.split('|')[1].split(',')
                 except:
-                    chain_strs=['A','B','C']
-                    print(f'WARNING!!! Parse chain number error!!! Chain number will be set as 3 for {fasta_name}')
+                    chain_strs=[random.choice(utils.chainID_list)]
+                    print(f'WARNING!!! Parse chain number error!!! Chain number will be set as 1 for fasta_name \"{fasta_name}\"')
+                    print(f'WARNING!!! Parse chain number error!!! Assigning chain id {chain_strs[0]} for fasta_name \"{fasta_name}\"')
                 input_list.append((seq_obj,chain_strs,self.dynamic_config.protocol,self.dynamic_config.afdb_allow_seq_id,self.dynamic_config.template_dir,self.dynamic_config.download_afdb,self.pdbParser))
             
         if input_list:
