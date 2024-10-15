@@ -1213,6 +1213,7 @@ class Solver:
         fasta_set=set()
         seq=''
         for line_n, line in enumerate(fasta_lines):
+            line=line.strip()
             if line[0]=='>':
                 head = line
                 split_fasta=line[1:].split('|')[0]
@@ -1226,7 +1227,7 @@ class Solver:
             elif len(line)<5:
                 continue
             else:
-                seq=seq+line.strip()
+                seq=seq+line
             
             if line_n >=len(fasta_lines)-1 or fasta_lines[line_n+1].startswith('>'):
                 for i,c in enumerate(seq):
