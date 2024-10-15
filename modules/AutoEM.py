@@ -1214,7 +1214,9 @@ class Solver:
         seq=''
         for line_n, line in enumerate(fasta_lines):
             line=line.strip()
-            if line[0]=='>':
+            if len(line)<2:
+                continue
+            elif line[0]=='>':
                 head = line
                 split_fasta=line[1:].split('|')[0]
                 fasta_name=split_fasta
@@ -1224,7 +1226,7 @@ class Solver:
                     fasta_name = f'{split_fasta}_{n}'
                 fasta_set.add(fasta_name)
                 seq=''
-            elif len(line)<5:
+            elif len(line)<10:
                 continue
             else:
                 seq=seq+line
