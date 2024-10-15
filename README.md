@@ -1,11 +1,11 @@
 # EModelX
 EModelX is a method for automatic cryo-EM protein complex structure modeling.
-![EModelX](data/displays/figure1.png)
-
+![EModelX](paper.png)
+![EMDB-32336](case.jpg)
+## Web Server
+EModelX's web server is accessible at <https://bio-web1.nscc-gz.cn/app/EModelX>   
 ## Colab
 EModelX can be run in Colab: [Minimal Example](https://colab.research.google.com/github/biomed-AI/EModelX/blob/main/minimal_example.ipynb)  
-
-
 ## Environment
 `conda env create -f EModelX.yml`  
 For EModelX(+AF), you may need to run AlphaFold following <https://github.com/deepmind/alphafold> or get AlphaFold-predicted single-chain structures from AlphaFoldDB (<https://alphafold.ebi.ac.uk/>).  
@@ -46,5 +46,4 @@ Install phenix following <https://phenix-online.org/> into a directory, e.g. `mo
 **For EModelX(+AF)**:   
 `python run.py --protocol=temp_flex --EM_map=data/inputs/maps/emd_32336.map.gz --fasta=data/inputs/fastas/7w72 --template_dir=data/inputs/templates --output_dir=data/outputs --download_afdb --afdb_allow_seq_id 0.6 --run_pulchra --pulchra_path=modules/pulchra304/src/pulchra --run_phenix --phenix_act=modules/phenix-1.20.1-4487/phenix_env.sh --resolution=3.1`
 
-## Web Server
-EModelX's web server is accessible at <https://bio-web1.nscc-gz.cn/app/EModelX>   
+
