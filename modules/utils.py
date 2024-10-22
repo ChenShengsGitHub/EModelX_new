@@ -200,32 +200,35 @@ def get_afdb_id_by_seq(seq,allow_seq_id=0.95):
             
             if try_num>0:
                 random_sleep=round(random.random()*90)+30
-                print('Retry {:d} time'.format(try_num))
+                print('Retry {:d} time'.format(try_num), flush=True)
             try_num+=1
-            print('Please waiting for {:d}s....'.format(random_sleep))
+            print('Please waiting for {:d}s....'.format(random_sleep), flush=True)
             time.sleep(random_sleep)
-            print('In total {:d}s have past'.format(round(time.time()-time_start)))
+            print('In total {:d}s have past'.format(round(time.time()-time_start)), flush=True)
             error=False
         except Exception as ex:
-            print('Error!: ',ex)
+            print('Error!: ',ex, flush=True)
             if error:
                 return 'Failed! Continuous error'
             error=True
             try_num+=1
-            print('Retry {:d} time'.format(try_num))
-            print(f'Continuous error would be recognized as search failed')
+            print('Retry {:d} time'.format(try_num), flush=True)
+            print(f'Continuous error would be recognized as search failed', flush=True)
 
             
     return 'Failed! Waiting for sequence search in AFDB over 1000s!'
 
 def get_af_pdb_by_seq(seq,fasta_name,save_path,allow_seq_id):
-    print(f'Your AFDB search is currently underway for {fasta_name}:\t\"{seq}\"')
-    print('The process typically requires between 5 to 10 minutes to complete when no same search hits before.')
-    print('Waiting over 1000s would be recognized as search failed')
+    random_sleep=random.random()*5
+    time.sleep(random_sleep)
+    print(f'Your AFDB search is currently underway for {fasta_name}:\t\"{seq}\"', flush=True)
+    
     res=get_afdb_id_by_seq(seq,allow_seq_id)
-    print(res)
+    random_sleep=random.random()*5
+    time.sleep(random_sleep)
+    print(res, flush=True)
     if not isinstance(res,dict) or 'AFDB entryId' not in res:
-        print(f'{fasta_name} not found in AFDB!')
+        print(f'{fasta_name} not found in AFDB!', flush=True)
         return '',None
     
     try:
@@ -239,5 +242,5 @@ def get_af_pdb_by_seq(seq,fasta_name,save_path,allow_seq_id):
     if os.path.exists(save_path):
         return af_sub_seq, af_sub_seq_range
     else:
-        print(f'{fasta_name} download from AFDB failed!')
+        print(f'{fasta_name} download from AFDB failed!', flush=True)
         return '',None

@@ -352,8 +352,8 @@ def get_seq(inp):
                             af_seq+=utils.AA2abb[residue.get_resname()]
                         else:
                             af_seq+='A'
-                            print(f'Not standard Residue {residue.get_resname()} in AlphaFold structure {fasta_name}! Change it to ALA!')
-                print(f'Replacing {fasta_name}:\n\t\"{seq_obj.sequence}\"\nas\t\"{af_seq}\"')
+                            print(f'Not standard Residue {residue.get_resname()} in AlphaFold structure {fasta_name}! Change it to ALA!', flush=True)
+                print(f'Replacing {fasta_name}:\n\t\"{seq_obj.sequence}\"\nas\t\"{af_seq}\"', flush=True)
                 seq_obj.AF2_struct = np.array(AF2_struct)
                 seq_obj.sequence = af_seq
             else:
@@ -1246,6 +1246,9 @@ class Solver:
                 input_list.append((seq_obj,chain_strs,self.dynamic_config.protocol,self.dynamic_config.afdb_allow_seq_id,self.dynamic_config.template_dir,self.dynamic_config.download_afdb,self.pdbParser))
             
         if input_list:
+            print('AFDB searching...')
+            print('The process typically requires between 5 to 10 minutes to complete when no same search hits before.')
+            print('Waiting over 1000s would be recognized as search failed')
             pool = Pool(min(len(input_list),self.dynamic_config.mul_proc_num))
             results = pool.map(get_seq, input_list)
 
