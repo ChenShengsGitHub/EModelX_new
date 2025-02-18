@@ -650,6 +650,8 @@ class Solver:
                 self.fastas[self.fasta_list[fasta_ix]].trace_scores.append((AA_score[1:]+AA_score[:-1])*neigh_score)
 
         self.used_cands=set()
+        matched_len_thrh=7
+        unmatched_rmsd_thrh=4
         for fasta_ix, fasta_name in enumerate(self.fastas):
             this_fasta = self.fastas[fasta_name]
             score_lists=[]
@@ -690,14 +692,14 @@ class Solver:
                     traces = this_fasta.seq_matched_traces[trace_id]
                     if left_seq in seqs:
                         if len(models[0]) < len(chain_list):
-                            models[0][chain_list[len(model)]]=[trace_id]
+                            models[0][chain_list[len(models[0])]]=[trace_id]#confuse, change from models[0][chain_list[len(model)]]=[trace_id]
                             break
                         for model in models:
                             matched_chain_ids=set()
                             for chain_id in model:
                                 for ti in model[chain_id]:
                                     chain = this_fasta.trace_matched_seqs[ti]
-                                    if len(set(seqs)&set(chain))>4:
+                                    if len(set(seqs)&set(chain))>matched_len_thrh:#change from if len(set(seqs)&set(chain))>4:
                                         matched_chain_ids.add(chain_id)
                             unmatched_chain_ids = set([_ for _ in chain_list])-matched_chain_ids
                             if not unmatched_chain_ids:
@@ -747,9 +749,12 @@ class Solver:
                                         rmsd_mat[-1,j] = superpose3d.Superpose3D(val_coords,occ_coords)[0][0]
 
                                 min_i,min_j = np.unravel_index(np.argmin(rmsd_mat),rmsd_mat.shape)
-                                tmp_model=copy.deepcopy(model)
-                                tmp_model[list(unmatched_chain_ids)[min_j]] = [trace_id] + tmp_model[list(unmatched_chain_ids)[min_j]]
-                                tmp_models.append(tmp_model)
+                                if rmsd_mat[min_i,min_j] < unmatched_rmsd_thrh:#new condition
+                                    tmp_model=copy.deepcopy(model)
+                                    tmp_model[list(unmatched_chain_ids)[min_j]] = [trace_id] + tmp_model[list(unmatched_chain_ids)[min_j]]
+                                    tmp_models.append(tmp_model)
+                                else:
+                                    tmp_models.append(copy.deepcopy(model))
                             else:
                                 for chain_id in unmatched_chain_ids:
                                     chain = model[chain_id]
@@ -762,14 +767,14 @@ class Solver:
 
                     if right_seq in seqs:
                         if len(models[0]) < len(chain_list):
-                            models[0][chain_list[len(model)]]=[trace_id]
+                            models[0][chain_list[len(models[0])]]=[trace_id]#confuse, change from models[0][chain_list[len(model)]]=[trace_id]
                             break
                         for model in models:
                             matched_chain_ids=set()
                             for chain_id in model:
                                 for ti in model[chain_id]:
                                     chain = this_fasta.trace_matched_seqs[ti]
-                                    if len(set(seqs)&set(chain))>4:
+                                    if len(set(seqs)&set(chain))>matched_len_thrh:#change from if len(set(seqs)&set(chain))>4:
                                         matched_chain_ids.add(chain_id)
                             unmatched_chain_ids = set([_ for _ in chain_list])-matched_chain_ids
                             if not unmatched_chain_ids:
@@ -818,9 +823,12 @@ class Solver:
                                         rmsd_mat[-1,j] = superpose3d.Superpose3D(val_coords,occ_coords)[0][0]
 
                                 min_i,min_j = np.unravel_index(np.argmin(rmsd_mat),rmsd_mat.shape)
-                                tmp_model=copy.deepcopy(model)
-                                tmp_model[list(unmatched_chain_ids)[min_j]] =  tmp_model[list(unmatched_chain_ids)[min_j]]+[trace_id]
-                                tmp_models.append(tmp_model)
+                                if rmsd_mat[min_i,min_j] < unmatched_rmsd_thrh:#new condition
+                                    tmp_model=copy.deepcopy(model)
+                                    tmp_model[list(unmatched_chain_ids)[min_j]] =  tmp_model[list(unmatched_chain_ids)[min_j]]+[trace_id]
+                                    tmp_models.append(tmp_model)
+                                else:
+                                    tmp_models.append(copy.deepcopy(model))
                             else:
                                 for chain_id in unmatched_chain_ids:
                                     chain = model[chain_id]
@@ -1376,7 +1384,7 @@ class Solver:
                     self.cand_match_result[fasta_ix,fragment[1][i],cand] = fragment[2][i]
                     self.seq_align_score[:,:,cand]=0
                     self.seq_cand_AA_mat_copy[:,:,cand]=0
-                    if np.sum(self.cand_match_result[fasta_ix,fragment[1][i]]>0) >= len(self.fastas[self.fasta_list[fasta_ix]].chain_dict):
+                    if np.sum(self.cand_match_result[fasta_ix,fragment[1][i]]>0) >= len(self.fastas[self.fasta_list[fasta_ix]].chain_dict):#remove it could be better but may cause bugs
                         self.seq_align_score[fasta_ix,fragment[1][i],:]=0
                         self.seq_cand_AA_mat_copy[fasta_ix,fragment[1][i],:] = 0
     
